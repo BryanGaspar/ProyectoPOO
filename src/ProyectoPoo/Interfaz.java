@@ -14,12 +14,15 @@ import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import java.awt.Toolkit;
 import java.awt.Color;
+import javax.swing.UIManager;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Interfaz extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField txtUser;
+	private JTextField txtPass;
 
 	/**
 	 * Launch the application.
@@ -66,21 +69,42 @@ public class Interfaz extends JFrame {
 		lblNewLabel_2.setBounds(65, 127, 87, 14);
 		contentPane.add(lblNewLabel_2);
 		
-		textField = new JTextField();
-		textField.setBounds(147, 66, 146, 20);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		txtUser = new JTextField();
+		txtUser.setBounds(147, 66, 146, 20);
+		contentPane.add(txtUser);
+		txtUser.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(147, 125, 146, 20);
-		contentPane.add(textField_1);
-		textField_1.setColumns(10);
+		txtPass = new JTextField();
+		txtPass.setBounds(147, 125, 146, 20);
+		contentPane.add(txtPass);
+		txtPass.setColumns(10);
 		
 		JButton btnNewButton = new JButton("INGRESAR");
-		btnNewButton.setBackground(Color.LIGHT_GRAY);
+		btnNewButton.setBackground(UIManager.getColor("Button.highlight"));
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnNewButton.setBounds(164, 172, 129, 23);
+		btnNewButton.setBounds(44, 171, 142, 23);
 		contentPane.add(btnNewButton);
+		
+		JButton btnRegristrarse = new JButton("REGRISTRARSE");
+		btnRegristrarse.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Registrarse abrir = new Registrarse();
+				abrir.setVisible(true);
+				dispose(); 
+				
+				
+			}
+		});
+		btnRegristrarse.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnRegristrarse.setBackground(Color.WHITE);
+		btnRegristrarse.setBounds(234, 171, 142, 23);
+		contentPane.add(btnRegristrarse);
+		
+		JLabel lblNewLabel_4 = new JLabel("O");
+		lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblNewLabel_4.setBounds(190, 176, 46, 14);
+		contentPane.add(lblNewLabel_4);
 		
 		JLabel lblNewLabel_3 = new JLabel("");
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
