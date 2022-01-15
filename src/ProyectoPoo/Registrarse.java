@@ -149,7 +149,7 @@ public class Registrarse extends JFrame {
 		
 		JButton btnNewButton = new JButton("GUARDAR");
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnNewButton.setBounds(505, 147, 152, 37);
+		btnNewButton.setBounds(498, 182, 152, 37);
 		contentPane.add(btnNewButton);
 		
 		JLabel lblNewLabel = new JLabel("");
