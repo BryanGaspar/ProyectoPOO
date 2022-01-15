@@ -108,7 +108,7 @@ public class Interfaz extends JFrame {
 		
 		JLabel lblNewLabel_3 = new JLabel("");
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_3.setIcon(new ImageIcon("D:\\Clases\\GitHub\\ProyectoPoo\\src\\ProyectoPoo\\ImagenesProyecto\\fondo-login-web.jpg"));
+		lblNewLabel_3.setIcon(new ImageIcon(Interfaz.class.getResource("/ProyectoPoo/ImagenesProyecto/fondo-login-web.png")));
 		lblNewLabel_3.setBounds(0, 0, 434, 261);
 		contentPane.add(lblNewLabel_3);
 	}

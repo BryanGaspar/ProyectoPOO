@@ -47,7 +47,7 @@ public class Registrarse extends JFrame {
 	 */
 	public Registrarse() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 788, 355);
+		setBounds(100, 100, 967, 449);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -153,8 +153,8 @@ public class Registrarse extends JFrame {
 		contentPane.add(btnNewButton);
 		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon("D:\\Clases\\GitHub\\ProyectoPoo\\src\\ProyectoPoo\\ImagenesProyecto\\fondo-login-web.jpg"));
-		lblNewLabel.setBounds(0, 0, 772, 316);
+		lblNewLabel.setIcon(new ImageIcon(Registrarse.class.getResource("/ProyectoPoo/ImagenesProyecto/fondo-login-web.png")));
+		lblNewLabel.setBounds(0, 0, 951, 410);
 		contentPane.add(lblNewLabel);
 	}
 }
