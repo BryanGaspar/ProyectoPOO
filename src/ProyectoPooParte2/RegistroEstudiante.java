@@ -37,8 +37,11 @@ import java.awt.event.KeyEvent;
 import javax.swing.JScrollPane;
 import java.awt.Scrollbar;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseEvent;
+import javax.swing.JFrame;
 
-public class RegistroEstudiante extends JInternalFrame implements ActionListener, KeyListener {
+public class RegistroEstudiante extends JInternalFrame implements ActionListener, KeyListener, MouseListener {
 	private JPanel panel;
 	private JButton btnNuevo;
 	private JButton btnGuardar;
@@ -56,15 +59,15 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
 	private JLabel lblPass;
 	private JLabel lblGenero;
 	private JLabel lblUsuario;
-	private JTextField txtFechaNac;
-	private JTextField txtUsuario;
-	private JTextField txtEmail;
-	private JTextField txtApellidos;
-	private JTextField txtNombres;
-	private JTextField txtCedula;
-	private JTextField txtPass;
-	private JComboBox cmbGenero;
-	private JTable tblRegistros;
+	public JTextField txtFechaNac;
+	public JTextField txtUsuario;
+	public JTextField txtEmail;
+	public JTextField txtApellidos;
+	public JTextField txtNombres;
+	public JTextField txtCedula;
+	public JTextField txtPass;
+	public JComboBox cmbGenero;
+	public JTable tblRegistros;
 
 	/**
 	 * Launch the application.
@@ -142,6 +145,7 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
 		pnRegistroEst.setLayout(null);
 		
 		tblRegistros = new JTable();
+		tblRegistros.addMouseListener(this);
 		tblRegistros.setBackground(Color.WHITE);
 		tblRegistros.setBounds(10, 11, 463, 248);
 		tblRegistros.setModel(new DefaultTableModel(
@@ -286,7 +290,11 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
 	protected void actionPerformedBtnEditar(ActionEvent e) {
 		
 		tabbedPane.setSelectedIndex(1);
-		btnGuardar.setEnabled(true);
+		tabbedPane.setEnabledAt(1, true);
+		tabbedPane.setEnabledAt(0, false);
+		habilitarBotonGuardar();
+		btnNuevo.setEnabled(false);
+		
 
 	}
 	protected void actionPerformedBtnGuardar(ActionEvent e) {
@@ -356,5 +364,42 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
 	}
 	protected void keyReleasedTxtPass(KeyEvent e) {
 		habilitarBotonGuardar();
+	}
+	public void mouseClicked(MouseEvent e) {
+		if (e.getSource() == tblRegistros) {
+			mouseClickedTblRegistros(e);
+		}
+	}
+	public void mouseEntered(MouseEvent e) {
+	}
+	public void mouseExited(MouseEvent e) {
+	}
+	public void mousePressed(MouseEvent e) {
+	}
+	public void mouseReleased(MouseEvent e) {
+	}
+	protected void mouseClickedTblRegistros(MouseEvent e) {
+		btnNuevo.setEnabled(false);
+		btnEditar.setEnabled(true);
+		String cedula , nombres, apellidos, usuario, email, pass, fechaN;
+        int Fila = tblRegistros.getSelectedRow();
+        cedula = tblRegistros.getValueAt(Fila, 0).toString();
+        nombres = tblRegistros.getValueAt(Fila, 1).toString();
+        apellidos = tblRegistros.getValueAt(Fila, 2).toString();
+        usuario = tblRegistros.getValueAt(Fila, 3).toString();
+        email = tblRegistros.getValueAt(Fila, 4).toString();
+        pass = tblRegistros.getValueAt(Fila, 5).toString();
+        
+        fechaN = tblRegistros.getValueAt(Fila, 7).toString();
+       txtCedula.setText(cedula);
+       txtNombres.setText(nombres);
+       txtApellidos.setText(apellidos);
+       txtUsuario.setText(usuario);
+       txtEmail.setText(email);
+       txtPass.setText(pass);
+       cmbGenero.getSelectedItem();
+        txtFechaNac.setText(fechaN);
+		
+		
 	}
 }

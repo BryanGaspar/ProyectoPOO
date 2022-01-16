@@ -8,12 +8,117 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import ProyectoPoo.Login;
+import ProyectoPooParte2.RegistroEstudiante;
 
 
 public class crudsql {
 	Conexion con = new Conexion();
+	public void eliminarEstudiante() {
+		String sql = "DELETE FROM Estudiante WHERE Cedula=?";
+		DefaultTableModel modelo = new DefaultTableModel();
+        Connection cn = null;
+        
+        PreparedStatement pst = null;
+        RegistroEstudiante rE = new RegistroEstudiante();
+        ResultSet rs = null;
+        
+
+        try
+        {
+            cn = con.crearConexion();
+            
+            pst = cn.prepareStatement(sql);
+           
+            int Fila = rE.tblRegistros.getSelectedRow();
+            String codigo = rE.tblRegistros.getValueAt(Fila, 0).toString();
+            pst.setString(1, codigo);
+            rs = pst.executeQuery();
+            
+            modelo.removeRow(Fila);
+            
+           
+        }
+        catch(SQLException e)
+        {
+            
+            JOptionPane.showMessageDialog(null,"Error al conectar");
+            
+        }
+        finally
+        {
+            try
+            {
+                if (rs != null) rs.close();
+                
+                if (pst != null) pst.close();
+                
+                if (cn != null) cn.close();
+            }
+            catch(SQLException e)
+            {
+                JOptionPane.showMessageDialog(null,e);
+            }
+        }
+	}
 	
 	
+	public void ActualizarEstudiantes() {
+		String sql = "SELECT Cedula, Nombres, Apellidos, Usuario,Email, Contrasenia ,Genero, FechaNac FROM Estudiante WHERE Cedula=?";
+        
+        Connection cn = null;
+        
+        PreparedStatement pst = null;
+        RegistroEstudiante rE = new RegistroEstudiante();
+        ResultSet rs = null;
+        
+
+        //try
+        //{
+            cn = con.crearConexion();
+            
+            //pst = cn.prepareStatement(sql);
+            
+            //pst.setString(1, cedula);
+            //rs = pst.executeQuery();
+            
+           /* while(rs.next())
+            {
+                rE.txtCedula.setText(rs.getString("Cedula"));
+                rE.txtNombres.setText(rs.getString("Nombres"));
+                rE.txtApellidos.setText(rs.getString("Apellidos"));
+                rE.txtUsuario.setText(rs.getString("Usuario"));
+                rE.txtEmail.setText(rs.getString("Email"));
+                rE.txtPass.setText(rs.getString("Contrasenia"));
+                rE.cmbGenero.getSelectedItem();
+                rE.txtFechaNac.setText(rs.getString("FechaNac"));
+           }
+            
+           
+        }
+        catch(SQLException e)
+        {
+            
+            JOptionPane.showMessageDialog(null,"Error al conectar");
+            
+        }
+        finally
+        {
+            try
+            {
+                if (rs != null) rs.close();
+                
+                if (pst != null) pst.close();
+                
+                if (cn != null) cn.close();
+            }
+            catch(SQLException e)
+            {
+                JOptionPane.showMessageDialog(null,e);
+            }
+        }*/
+        
+		
+	}
 	public DefaultTableModel mostrarEstudiantes() {
 		String []  nombresColumnas = {"Cedula","Nombres","Apellidos","Usuario","Email","Contraseña","Genero","Fecha Nac"};
         String [] registros = new String[8];
