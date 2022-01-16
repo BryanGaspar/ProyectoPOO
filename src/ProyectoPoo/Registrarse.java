@@ -14,18 +14,22 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.UIManager;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Registrarse extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
-	private JTextField textField_6;
-
+	private JTextField txtCedula;
+	private JTextField txtNombres;
+	private JTextField txtApellidos;
+	private JTextField txtFechaNac;
+	private JTextField txtEmail;
+	private JTextField txtPass;
+	private JTextField txtConfirmarPass;
+	private JTextField txtUsuario;
+	
+	
 	/**
 	 * Launch the application.
 	 */
@@ -44,10 +48,12 @@ public class Registrarse extends JFrame {
 
 	/**
 	 * Create the frame.
+	 *
 	 */
+	
 	public Registrarse() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 967, 449);
+		setBounds(100, 100, 845, 372);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -55,17 +61,17 @@ public class Registrarse extends JFrame {
 		
 		JLabel lblNombres = new JLabel("Nombres");
 		lblNombres.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblNombres.setBounds(50, 81, 119, 24);
+		lblNombres.setBounds(50, 97, 119, 24);
 		contentPane.add(lblNombres);
 		
 		JLabel lblApellidos = new JLabel("Apellidos");
 		lblApellidos.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblApellidos.setBounds(50, 116, 109, 24);
+		lblApellidos.setBounds(50, 132, 109, 24);
 		contentPane.add(lblApellidos);
 		
 		JLabel lblCedula = new JLabel("Cedula");
 		lblCedula.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblCedula.setBounds(50, 49, 119, 21);
+		lblCedula.setBounds(50, 65, 119, 21);
 		contentPane.add(lblCedula);
 		
 		JLabel lblNewLabel_5 = new JLabel("REGISTRATE");
@@ -75,86 +81,104 @@ public class Registrarse extends JFrame {
 		
 		JLabel lblFechaNac = new JLabel("Fecha de Nac");
 		lblFechaNac.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblFechaNac.setBounds(50, 151, 152, 24);
+		lblFechaNac.setBounds(442, 97, 152, 24);
 		contentPane.add(lblFechaNac);
 		
-		JLabel lblCorreo = new JLabel("Correo Electronico");
+		JLabel lblCorreo = new JLabel("Email");
 		lblCorreo.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblCorreo.setBounds(50, 186, 198, 24);
+		lblCorreo.setBounds(50, 202, 128, 24);
 		contentPane.add(lblCorreo);
 		
 		JLabel lblPass = new JLabel("Contrase\u00F1a");
 		lblPass.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblPass.setBounds(50, 221, 128, 24);
+		lblPass.setBounds(50, 237, 128, 24);
 		contentPane.add(lblPass);
 		
 		JLabel lblConfirmarPass = new JLabel("Confirmar Contrase\u00F1a");
 		lblConfirmarPass.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblConfirmarPass.setBounds(50, 256, 247, 24);
+		lblConfirmarPass.setBounds(50, 272, 247, 24);
 		contentPane.add(lblConfirmarPass);
 		
-		textField = new JTextField();
-		textField.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		textField.setBounds(193, 48, 212, 20);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		txtCedula = new JTextField();
+		txtCedula.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		txtCedula.setBounds(193, 66, 164, 20);
+		contentPane.add(txtCedula);
+		txtCedula.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		textField_1.setBounds(193, 85, 212, 20);
-		contentPane.add(textField_1);
-		textField_1.setColumns(10);
+		txtNombres = new JTextField();
+		txtNombres.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		txtNombres.setBounds(193, 101, 164, 20);
+		contentPane.add(txtNombres);
+		txtNombres.setColumns(10);
 		
-		textField_2 = new JTextField();
-		textField_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		textField_2.setBounds(193, 120, 212, 20);
-		contentPane.add(textField_2);
-		textField_2.setColumns(10);
+		txtApellidos = new JTextField();
+		txtApellidos.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		txtApellidos.setBounds(193, 136, 164, 20);
+		contentPane.add(txtApellidos);
+		txtApellidos.setColumns(10);
 		
-		textField_3 = new JTextField();
-		textField_3.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		textField_3.setBounds(193, 155, 212, 20);
-		contentPane.add(textField_3);
-		textField_3.setColumns(10);
+		txtFechaNac = new JTextField();
+		txtFechaNac.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		txtFechaNac.setBounds(589, 101, 130, 20);
+		contentPane.add(txtFechaNac);
+		txtFechaNac.setColumns(10);
 		
-		textField_4 = new JTextField();
-		textField_4.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		textField_4.setColumns(10);
-		textField_4.setBounds(241, 186, 164, 20);
-		contentPane.add(textField_4);
+		txtEmail = new JTextField();
+		txtEmail.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		txtEmail.setColumns(10);
+		txtEmail.setBounds(193, 206, 164, 20);
+		contentPane.add(txtEmail);
 		
-		textField_5 = new JTextField();
-		textField_5.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		textField_5.setColumns(10);
-		textField_5.setBounds(193, 221, 212, 20);
-		contentPane.add(textField_5);
+		txtPass = new JTextField();
+		txtPass.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		txtPass.setColumns(10);
+		txtPass.setBounds(193, 241, 164, 20);
+		contentPane.add(txtPass);
 		
-		textField_6 = new JTextField();
-		textField_6.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		textField_6.setColumns(10);
-		textField_6.setBounds(289, 262, 116, 20);
-		contentPane.add(textField_6);
+		txtConfirmarPass = new JTextField();
+		txtConfirmarPass.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		txtConfirmarPass.setColumns(10);
+		txtConfirmarPass.setBounds(290, 276, 109, 20);
+		contentPane.add(txtConfirmarPass);
 		
 		JLabel lblGenero = new JLabel("Genero");
 		lblGenero.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblGenero.setBounds(442, 56, 89, 21);
+		lblGenero.setBounds(442, 65, 89, 21);
 		contentPane.add(lblGenero);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBackground(UIManager.getColor("Button.highlight"));
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Masculino", "Femenino"}));
-		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		comboBox.setBounds(529, 57, 128, 22);
-		contentPane.add(comboBox);
+		JComboBox cmbGenero = new JComboBox();
+		cmbGenero.setBackground(UIManager.getColor("Button.highlight"));
+		cmbGenero.setModel(new DefaultComboBoxModel(new String[] {"Masculino", "Femenino"}));
+		cmbGenero.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		cmbGenero.setBounds(591, 66, 128, 22);
+		contentPane.add(cmbGenero);
+		crudsql objcrud = new crudsql();
+		JButton btnGuardar = new JButton("GUARDAR");
+		btnGuardar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				objcrud.insertarDatos(txtCedula.getText(), txtNombres.getText(), txtApellidos.getText(), txtEmail.getText(), 
+						txtUsuario.getText(), txtPass.getText(), cmbGenero.getSelectedItem().toString(),txtFechaNac.getText());
+			}
+		});
+		btnGuardar.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnGuardar.setBounds(498, 182, 152, 37);
+		contentPane.add(btnGuardar);
 		
-		JButton btnNewButton = new JButton("GUARDAR");
-		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnNewButton.setBounds(498, 182, 152, 37);
-		contentPane.add(btnNewButton);
+		JLabel lblUsuario = new JLabel("Usuario");
+		lblUsuario.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblUsuario.setBounds(50, 167, 109, 24);
+		contentPane.add(lblUsuario);
+		
+		txtUsuario = new JTextField();
+		txtUsuario.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		txtUsuario.setColumns(10);
+		txtUsuario.setBounds(193, 171, 164, 20);
+		contentPane.add(txtUsuario);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(Registrarse.class.getResource("/ProyectoPoo/ImagenesProyecto/fondo-login-web.png")));
-		lblNewLabel.setBounds(0, 0, 951, 410);
+		lblNewLabel.setBounds(0, 0, 829, 333);
 		contentPane.add(lblNewLabel);
 	}
+	
 }
