@@ -174,11 +174,6 @@ public class Registrarse extends JFrame {
 		txtUsuario.setColumns(10);
 		txtUsuario.setBounds(193, 171, 164, 20);
 		contentPane.add(txtUsuario);
-		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(Registrarse.class.getResource("/ProyectoPoo/ImagenesProyecto/fondo-login-web.png")));
-		lblNewLabel.setBounds(0, 0, 829, 333);
-		contentPane.add(lblNewLabel);
 	}
 	
 }

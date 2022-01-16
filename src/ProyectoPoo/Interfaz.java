@@ -105,11 +105,5 @@ public class Interfaz extends JFrame {
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblNewLabel_4.setBounds(190, 176, 46, 14);
 		contentPane.add(lblNewLabel_4);
-		
-		JLabel lblNewLabel_3 = new JLabel("");
-		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_3.setIcon(new ImageIcon(Interfaz.class.getResource("/ProyectoPoo/ImagenesProyecto/fondo-login-web.png")));
-		lblNewLabel_3.setBounds(0, 0, 434, 261);
-		contentPane.add(lblNewLabel_3);
 	}
 }
