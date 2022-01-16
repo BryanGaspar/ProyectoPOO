@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Conexiones.crudsql;
+
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import java.awt.Font;
@@ -17,7 +20,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class Registrarse extends JFrame {
+public class Login extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtCedula;
@@ -37,7 +40,7 @@ public class Registrarse extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Registrarse frame = new Registrarse();
+					Login frame = new Login();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -51,7 +54,7 @@ public class Registrarse extends JFrame {
 	 *
 	 */
 	
-	public Registrarse() {
+	public Login() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 845, 372);
 		contentPane = new JPanel();

@@ -1,7 +1,9 @@
-package ProyectoPoo;
+package Conexiones;
 import java.sql.Connection;
 
 import javax.swing.JOptionPane;
+
+
 public class crudsql {
 	Conexion con = new Conexion();
 	

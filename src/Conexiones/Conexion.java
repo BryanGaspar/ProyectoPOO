@@ -1,4 +1,4 @@
-package ProyectoPoo;
+package Conexiones;
 import java.sql.*;
 
 import javax.swing.JOptionPane;
@@ -12,7 +12,7 @@ public class Conexion {
 		try {
 		Class.forName("org.postgresql.Driver");
 		 conexion = DriverManager.getConnection(URL, USER, PASS);
-	
+		 JOptionPane.showMessageDialog(null, "Conexion Exitosa ");
 		} catch(Exception e) {
 			
 				JOptionPane.showMessageDialog(null, "error al conectar "+e,"Error",JOptionPane.ERROR_MESSAGE);
