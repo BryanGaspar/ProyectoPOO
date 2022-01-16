@@ -42,7 +42,6 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
 	crudsql objcrud = new crudsql();
 	private JTabbedPane tabbedPane;
 	private JPanel pnRegistroEst;
-	private JTable tblRegistros;
 	private JPanel pnNuevo;
 	private JLabel lblNombres;
 	private JLabel lblApellidos;
@@ -60,6 +59,7 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
 	private JTextField txtCedula;
 	private JTextField txtPass;
 	private JComboBox cmbGenero;
+	private JTable tblRegistros;
 
 	/**
 	 * Launch the application.
@@ -130,9 +130,12 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
 		getContentPane().add(tabbedPane);
 		
 		pnRegistroEst = new JPanel();
+		
 		tabbedPane.addTab("Registro Estudiantes", null, pnRegistroEst, null);
+		pnRegistroEst.setLayout(null);
 		
 		tblRegistros = new JTable();
+		tblRegistros.setBounds(24, 21, 449, 231);
 		pnRegistroEst.add(tblRegistros);
 		
 		pnNuevo = new JPanel();
@@ -256,20 +259,21 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
 	}
 	protected void actionPerformedBtnNuevo(ActionEvent e) {
 		
-		pnRegistroEst.setVisible(false);
-		pnNuevo.setVisible(true);
+		
+		tabbedPane.setSelectedIndex(1);
 		btnGuardar.setEnabled(true);
 	
 	}
 	protected void actionPerformedBtnEditar(ActionEvent e) {
 		
-		pnRegistroEst.setVisible(false);
-		pnNuevo.setVisible(true);
-		btnGuardar.setEnabled(true);
+		//pnRegistroEst.setVisible(false);
+		//pnNuevo.setVisible(true);
+		//btnGuardar.setEnabled(true);
 
 	}
 	protected void actionPerformedBtnGuardar(ActionEvent e) {
 		objcrud.insertarDatos(txtCedula.getText(), txtNombres.getText(), txtApellidos.getText(), txtEmail.getText(), 
 				txtUsuario.getText(), txtPass.getText(), cmbGenero.getSelectedItem().toString(),txtFechaNac.getText());
+		
 	}
 }
