@@ -24,6 +24,8 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import java.awt.Color;
+import java.awt.SystemColor;
+import javax.swing.UIManager;
 
 public class RegistroEstudiante extends JInternalFrame implements ActionListener {
 	private JPanel panel;
@@ -83,24 +85,29 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
 		panel.setLayout(null);
 		
 		btnNuevo = new JButton("Nuevo");
+		btnNuevo.setBackground(UIManager.getColor("Button.highlight"));
 		btnNuevo.addActionListener(this);
 		btnNuevo.setBounds(17, 21, 111, 41);
 		btnNuevo.setIcon(new ImageIcon(RegistroEstudiante.class.getResource("/ProyectoPoo/ImagenesProyecto/add-image-16.png")));
 		panel.add(btnNuevo);
 		
 		btnGuardar = new JButton("Guardar");
+		btnGuardar.setBackground(UIManager.getColor("Button.highlight"));
 		btnGuardar.setEnabled(false);
 		btnGuardar.setIcon(new ImageIcon(RegistroEstudiante.class.getResource("/ProyectoPoo/ImagenesProyecto/folder-3-16.png")));
 		btnGuardar.setBounds(17, 81, 111, 41);
 		panel.add(btnGuardar);
 		
 		btnEditar = new JButton("Editar");
+		btnEditar.setBackground(UIManager.getColor("Button.highlight"));
+		btnEditar.addActionListener(this);
 		btnEditar.setEnabled(false);
 		btnEditar.setIcon(new ImageIcon(RegistroEstudiante.class.getResource("/ProyectoPoo/ImagenesProyecto/edit-property-16.png")));
 		btnEditar.setBounds(17, 151, 111, 41);
 		panel.add(btnEditar);
 		
 		btnEliminar = new JButton("Eliminar");
+		btnEliminar.setBackground(UIManager.getColor("Button.highlight"));
 		btnEliminar.setEnabled(false);
 		btnEliminar.setIcon(new ImageIcon(RegistroEstudiante.class.getResource("/ProyectoPoo/ImagenesProyecto/delete-16.png")));
 		btnEliminar.setBounds(17, 203, 111, 41);
@@ -111,10 +118,13 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
 		getContentPane().add(menuBar);
 		
 		btnRegistro = new JButton("Registro estudiantes");
+		btnRegistro.setBackground(SystemColor.menu);
 		btnRegistro.addActionListener(this);
 		menuBar.add(btnRegistro);
 		
 		btnModificar = new JButton("Nuevo/Modificar");
+		btnModificar.setBackground(SystemColor.menu);
+		btnModificar.setVisible(false);
 		btnModificar.addActionListener(this);
 		menuBar.add(btnModificar);
 		
@@ -182,6 +192,9 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
 	}
 	
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnEditar) {
+			actionPerformedBtnEditar(e);
+		}
 		if (e.getSource() == btnModificar) {
 			actionPerformedBtnModificar(e);
 		}
@@ -197,9 +210,9 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
 		btnModificar.requestFocus();
 		pnRegistros.setVisible(false);
 		panelModificar.setVisible(true);
-		btnEditar.setEnabled(true);
+
 		btnGuardar.setEnabled(true);
-		btnEliminar.setEnabled(true);
+	
 	}
 	protected void actionPerformedBtnRegistro(ActionEvent e) {
 		panelModificar.setVisible(false);
@@ -211,5 +224,13 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
 	}
 	protected void actionPerformedBtnModificar(ActionEvent e) {
 		
+	}
+	protected void actionPerformedBtnEditar(ActionEvent e) {
+		btnModificar.setVisible(true);
+		btnModificar.requestFocus();
+		pnRegistros.setVisible(false);
+		panelModificar.setVisible(true);
+		btnGuardar.setEnabled(true);
+
 	}
 }

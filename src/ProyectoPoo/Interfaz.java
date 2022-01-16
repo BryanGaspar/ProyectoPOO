@@ -18,11 +18,12 @@ import javax.swing.UIManager;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class Interfaz extends JFrame {
+public class Interfaz extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
 	private JTextField txtUser;
 	private JTextField txtPass;
+	private JButton btnNewButton;
 
 	/**
 	 * Launch the application.
@@ -79,7 +80,8 @@ public class Interfaz extends JFrame {
 		contentPane.add(txtPass);
 		txtPass.setColumns(10);
 		
-		JButton btnNewButton = new JButton("INGRESAR");
+		btnNewButton = new JButton("INGRESAR");
+		btnNewButton.addActionListener(this);
 		btnNewButton.setBackground(UIManager.getColor("Button.highlight"));
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnNewButton.setBounds(44, 171, 142, 23);
@@ -105,5 +107,16 @@ public class Interfaz extends JFrame {
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblNewLabel_4.setBounds(190, 176, 46, 14);
 		contentPane.add(lblNewLabel_4);
+	}
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnNewButton) {
+			actionPerformedBtnNewButton(e);
+		}
+	}
+	protected void actionPerformedBtnNewButton(ActionEvent e) {
+		Menu abrir = new Menu();
+		abrir.setExtendedState(MAXIMIZED_BOTH);
+		abrir.setVisible(true);
+		dispose(); 
 	}
 }
