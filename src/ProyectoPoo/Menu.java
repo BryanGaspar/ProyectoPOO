@@ -45,6 +45,11 @@ public class Menu extends JFrame implements ActionListener {
 	private JMenuItem mnEstudiantesMatriculados;
 	private JMenuItem mnCertificadoMatricula;
 	private JDesktopPane Desktop;
+	RegistroEstudiante est = new RegistroEstudiante();
+	RegistroCarreras carr = new RegistroCarreras();
+	RegistroNiveles nivel = new RegistroNiveles();
+	Asignaturas asg = new Asignaturas();
+	Periodos per = new Periodos();
 
 	/**
 	 * Launch the application.
@@ -162,28 +167,47 @@ public class Menu extends JFrame implements ActionListener {
 		}
 	}
 	protected void actionPerformedMnEstudiantes(ActionEvent e) {
-		RegistroEstudiante est = new RegistroEstudiante();
+		
 		this.Desktop.add(est);
 		est.setVisible(true);
+		carr.dispose();
+		nivel.dispose();
+		per.dispose();
+		asg.dispose();
 	}
 	protected void actionPerformedMnCarreras(ActionEvent e) {
-		RegistroCarreras carr = new RegistroCarreras();
+		est.dispose();
+		nivel.dispose();
+		per.dispose();
+		asg.dispose();
 		this.Desktop.add(carr);
 		carr.setVisible(true);
 	}
 	protected void actionPerformedMnNiveles(ActionEvent e) {
-		RegistroNiveles nivel = new RegistroNiveles();
+		
 		this.Desktop.add(nivel);
 		nivel.setVisible(true);
+		est.dispose();
+		carr.dispose();
+		per.dispose();
+		asg.dispose();
 	}
 	protected void actionPerformedMnPeriodos(ActionEvent e) {
-		Periodos per = new Periodos();
+		
 		this.Desktop.add(per);
 		per.setVisible(true);
+		est.dispose();
+		nivel.dispose();
+		carr.dispose();
+		asg.dispose();
 	}
 	protected void actionPerformedMnAsignaturas(ActionEvent e) {
-		Asignaturas asg = new Asignaturas();
+		
 		this.Desktop.add(asg);
 		asg.setVisible(true);
+		est.dispose();
+		nivel.dispose();
+		per.dispose();
+		carr.dispose();
 	}
 }

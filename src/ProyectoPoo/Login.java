@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import Conexiones.crudsql;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import java.awt.Font;
 import javax.swing.JTextField;
@@ -18,20 +19,25 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.UIManager;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.Timer;
 import java.awt.event.ActionEvent;
+import java.awt.Toolkit;
+import javax.swing.SwingConstants;
+import javax.swing.JPasswordField;
+import javax.swing.JProgressBar;
+import java.awt.SystemColor;
 
-public class Login extends JFrame {
+public class Login extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
-	private JTextField txtCedula;
-	private JTextField txtNombres;
-	private JTextField txtApellidos;
-	private JTextField txtFechaNac;
-	private JTextField txtEmail;
-	private JTextField txtPass;
-	private JTextField txtConfirmarPass;
+	private JLabel lblNewLabel;
+	private JLabel lblNewLabel_1;
+	private JLabel lblNewLabel_2;
 	private JTextField txtUsuario;
-	
+	private JButton btnIngresar;
+	private JPasswordField pass;
+	private JProgressBar progressBar;
+
 	
 	/**
 	 * Launch the application.
@@ -41,6 +47,7 @@ public class Login extends JFrame {
 			public void run() {
 				try {
 					Login frame = new Login();
+					
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -55,128 +62,105 @@ public class Login extends JFrame {
 	 */
 	
 	public Login() {
+		setBackground(SystemColor.window);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/ProyectoPoo/ImagenesProyecto/901-9019040_business-user-lock-1-image-business-user.png")));
+		setTitle("LOGIN");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 845, 372);
+		setBounds(100, 100, 553, 226);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNombres = new JLabel("Nombres");
-		lblNombres.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblNombres.setBounds(50, 97, 119, 24);
-		contentPane.add(lblNombres);
+		lblNewLabel = new JLabel("LOGIN-INICION DE SESION");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
+		lblNewLabel.setBounds(146, 11, 265, 42);
+		contentPane.add(lblNewLabel);
 		
-		JLabel lblApellidos = new JLabel("Apellidos");
-		lblApellidos.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblApellidos.setBounds(50, 132, 109, 24);
-		contentPane.add(lblApellidos);
+		lblNewLabel_1 = new JLabel("USUARIO:");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_1.setBounds(32, 66, 86, 14);
+		contentPane.add(lblNewLabel_1);
 		
-		JLabel lblCedula = new JLabel("Cedula");
-		lblCedula.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblCedula.setBounds(50, 65, 119, 21);
-		contentPane.add(lblCedula);
-		
-		JLabel lblNewLabel_5 = new JLabel("REGISTRATE");
-		lblNewLabel_5.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 20));
-		lblNewLabel_5.setBounds(304, 11, 137, 24);
-		contentPane.add(lblNewLabel_5);
-		
-		JLabel lblFechaNac = new JLabel("Fecha de Nac");
-		lblFechaNac.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblFechaNac.setBounds(442, 97, 152, 24);
-		contentPane.add(lblFechaNac);
-		
-		JLabel lblCorreo = new JLabel("Email");
-		lblCorreo.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblCorreo.setBounds(50, 202, 128, 24);
-		contentPane.add(lblCorreo);
-		
-		JLabel lblPass = new JLabel("Contrase\u00F1a");
-		lblPass.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblPass.setBounds(50, 237, 128, 24);
-		contentPane.add(lblPass);
-		
-		JLabel lblConfirmarPass = new JLabel("Confirmar Contrase\u00F1a");
-		lblConfirmarPass.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblConfirmarPass.setBounds(50, 272, 247, 24);
-		contentPane.add(lblConfirmarPass);
-		
-		txtCedula = new JTextField();
-		txtCedula.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		txtCedula.setBounds(193, 66, 164, 20);
-		contentPane.add(txtCedula);
-		txtCedula.setColumns(10);
-		
-		txtNombres = new JTextField();
-		txtNombres.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		txtNombres.setBounds(193, 101, 164, 20);
-		contentPane.add(txtNombres);
-		txtNombres.setColumns(10);
-		
-		txtApellidos = new JTextField();
-		txtApellidos.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		txtApellidos.setBounds(193, 136, 164, 20);
-		contentPane.add(txtApellidos);
-		txtApellidos.setColumns(10);
-		
-		txtFechaNac = new JTextField();
-		txtFechaNac.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		txtFechaNac.setBounds(589, 101, 130, 20);
-		contentPane.add(txtFechaNac);
-		txtFechaNac.setColumns(10);
-		
-		txtEmail = new JTextField();
-		txtEmail.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		txtEmail.setColumns(10);
-		txtEmail.setBounds(193, 206, 164, 20);
-		contentPane.add(txtEmail);
-		
-		txtPass = new JTextField();
-		txtPass.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		txtPass.setColumns(10);
-		txtPass.setBounds(193, 241, 164, 20);
-		contentPane.add(txtPass);
-		
-		txtConfirmarPass = new JTextField();
-		txtConfirmarPass.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		txtConfirmarPass.setColumns(10);
-		txtConfirmarPass.setBounds(290, 276, 109, 20);
-		contentPane.add(txtConfirmarPass);
-		
-		JLabel lblGenero = new JLabel("Genero");
-		lblGenero.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblGenero.setBounds(442, 65, 89, 21);
-		contentPane.add(lblGenero);
-		
-		JComboBox cmbGenero = new JComboBox();
-		cmbGenero.setBackground(UIManager.getColor("Button.highlight"));
-		cmbGenero.setModel(new DefaultComboBoxModel(new String[] {"Masculino", "Femenino"}));
-		cmbGenero.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		cmbGenero.setBounds(591, 66, 128, 22);
-		contentPane.add(cmbGenero);
-		crudsql objcrud = new crudsql();
-		JButton btnGuardar = new JButton("GUARDAR");
-		btnGuardar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				objcrud.insertarDatos(txtCedula.getText(), txtNombres.getText(), txtApellidos.getText(), txtEmail.getText(), 
-						txtUsuario.getText(), txtPass.getText(), cmbGenero.getSelectedItem().toString(),txtFechaNac.getText());
-			}
-		});
-		btnGuardar.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnGuardar.setBounds(498, 182, 152, 37);
-		contentPane.add(btnGuardar);
-		
-		JLabel lblUsuario = new JLabel("Usuario");
-		lblUsuario.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblUsuario.setBounds(50, 167, 109, 24);
-		contentPane.add(lblUsuario);
+		lblNewLabel_2 = new JLabel("CONTRASE\u00D1A:");
+		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_2.setBounds(10, 103, 108, 14);
+		contentPane.add(lblNewLabel_2);
 		
 		txtUsuario = new JTextField();
-		txtUsuario.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		txtUsuario.setColumns(10);
-		txtUsuario.setBounds(193, 171, 164, 20);
+		txtUsuario.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txtUsuario.setBounds(128, 64, 272, 20);
 		contentPane.add(txtUsuario);
+		txtUsuario.setColumns(10);
+		
+		btnIngresar = new JButton("INGRESAR");
+		btnIngresar.addActionListener(this);
+		btnIngresar.setBackground(UIManager.getColor("Button.focus"));
+		btnIngresar.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnIngresar.setBounds(128, 133, 272, 23);
+		contentPane.add(btnIngresar);
+		
+		pass = new JPasswordField();
+		pass.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		pass.setBounds(128, 102, 272, 20);
+		contentPane.add(pass);
+		
+		progressBar = new JProgressBar();
+		progressBar.setVisible(false);
+		progressBar.setBackground(SystemColor.window);
+		progressBar.setBounds(31, 167, 472, 14);
+		contentPane.add(progressBar);
+		crudsql objcrud = new crudsql();
+	}
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnIngresar) {
+			actionPerformedBtnNewButton(e);
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	protected void actionPerformedBtnNewButton(ActionEvent e) {
+		String usuario, passw;
+		Menu men = new Menu();
+		usuario = txtUsuario.getText();
+		passw = pass.getText();
+		if(usuario.isEmpty() || passw.isEmpty()) {
+			JOptionPane.showMessageDialog(null,"Error, algun campo esta vacio");
+		} else {
+			if(usuario.equals("admin") && passw.equals("12345")) {
+				Thread hilo = new Thread() {
+					@Override
+					public void run() {
+						for(int i=1; i<=100;i++) {
+							 try {
+								progressBar.setVisible(true);
+								Thread.sleep(10);
+								progressBar.setValue(i);
+							} catch (InterruptedException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							 
+						 }
+						JOptionPane.showMessageDialog(null,"Bienvenido" + " " + usuario.toUpperCase());
+						men.setExtendedState(MAXIMIZED_BOTH);
+						
+						men.setVisible(true);
+						dispose();
+					}
+				};
+				hilo.start();
+				
+			} else {
+				JOptionPane.showMessageDialog(null,"Su usario o contraseña es incorrecta");
+			}
+		}
+		
+		 
+	                   
+	        
 	}
 	
 }

@@ -32,8 +32,13 @@ import java.awt.SystemColor;
 import javax.swing.UIManager;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTabbedPane;
+import java.awt.event.KeyListener;
+import java.awt.event.KeyEvent;
+import javax.swing.JScrollPane;
+import java.awt.Scrollbar;
+import javax.swing.table.DefaultTableModel;
 
-public class RegistroEstudiante extends JInternalFrame implements ActionListener {
+public class RegistroEstudiante extends JInternalFrame implements ActionListener, KeyListener {
 	private JPanel panel;
 	private JButton btnNuevo;
 	private JButton btnGuardar;
@@ -70,6 +75,7 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
 				try {
 					RegistroEstudiante frame = new RegistroEstudiante();
 					frame.setVisible(true);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -81,6 +87,7 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
 	 * Create the frame.
 	 */
 	public RegistroEstudiante() {
+		setBackground(SystemColor.window);
 		
 		setTitle("Estudiantes");
 		setClosable(true);
@@ -135,11 +142,33 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
 		pnRegistroEst.setLayout(null);
 		
 		tblRegistros = new JTable();
-		tblRegistros.setBounds(24, 21, 449, 231);
+		tblRegistros.setBackground(Color.WHITE);
+		tblRegistros.setBounds(10, 11, 463, 248);
+		tblRegistros.setModel(new DefaultTableModel(
+			new Object[][] {
+				{"12345678", "Bryan", "Apellidos", "bryan202gaspar@hotmail.com", "BGaspar", "12345", "Masculino", "2002-11-12"},
+				{"123456", "gas", "asdf", "1asdasd", "dad", "12345", "Masculino", "2001-08-12"},
+				{"123", "asd", "da", "das", "dsa", "123", "Masculino", "2002-04-12"},
+				{"1234", "adsasd", "dasasd", "asdad", "dasasd", "123", "Masculino", "2002-04-12"},
+				{"850594573", "BRYAN", "GASPAR", "BRYAN202GASPAR@HOTMAIL.COM", "BGASPAR", "12345", "Masculino", "2002-04-02"},
+				{"5647131", "BRYAN", "GASPAR", "BRYAN2@HOTMAIL", "ASDW2", "12345", "Masculino", "2002-04-02"},
+			},
+			new String[] {
+				"Cedula", "Nombres", "Apellidos", "Usuario", "Email", "Contrase\u00F1a", "Genero", "Fecha Nac"
+			}
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, false, false, false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
 		pnRegistroEst.add(tblRegistros);
 		
 		pnNuevo = new JPanel();
 		tabbedPane.addTab("Nuevo/Modificar", null, pnNuevo, null);
+		tabbedPane.setEnabledAt(1, false);
 		pnNuevo.setLayout(null);
 		
 		lblNombres = new JLabel("Nombres:");
@@ -183,36 +212,43 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
 		pnNuevo.add(lblUsuario);
 		
 		txtFechaNac = new JTextField();
+		txtFechaNac.addKeyListener(this);
 		txtFechaNac.setBounds(338, 56, 86, 20);
 		txtFechaNac.setColumns(10);
 		pnNuevo.add(txtFechaNac);
 		
 		txtUsuario = new JTextField();
+		txtUsuario.addKeyListener(this);
 		txtUsuario.setBounds(118, 146, 86, 20);
 		txtUsuario.setColumns(10);
 		pnNuevo.add(txtUsuario);
 		
 		txtEmail = new JTextField();
+		txtEmail.addKeyListener(this);
 		txtEmail.setBounds(118, 120, 86, 20);
 		txtEmail.setColumns(10);
 		pnNuevo.add(txtEmail);
 		
 		txtApellidos = new JTextField();
+		txtApellidos.addKeyListener(this);
 		txtApellidos.setBounds(118, 89, 86, 20);
 		txtApellidos.setColumns(10);
 		pnNuevo.add(txtApellidos);
 		
 		txtNombres = new JTextField();
+		txtNombres.addKeyListener(this);
 		txtNombres.setBounds(118, 58, 86, 20);
 		txtNombres.setColumns(10);
 		pnNuevo.add(txtNombres);
 		
 		txtCedula = new JTextField();
+		txtCedula.addKeyListener(this);
 		txtCedula.setBounds(118, 30, 86, 20);
 		txtCedula.setColumns(10);
 		pnNuevo.add(txtCedula);
 		
 		txtPass = new JTextField();
+		txtPass.addKeyListener(this);
 		txtPass.setBounds(118, 182, 86, 20);
 		txtPass.setColumns(10);
 		pnNuevo.add(txtPass);
@@ -222,30 +258,11 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
 		cmbGenero.setBounds(338, 28, 86, 23);
 		cmbGenero.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		pnNuevo.add(cmbGenero);
+		
+		
 
 	}
-	public void modelo_tabla() {
-		//Anchura
-		tblRegistros.getColumnModel().getColumn(0).setPreferredWidth(5);
-		tblRegistros.getColumnModel().getColumn(1).setPreferredWidth(5);
-		tblRegistros.getColumnModel().getColumn(2).setPreferredWidth(5);
-		tblRegistros.getColumnModel().getColumn(3).setPreferredWidth(5);
-		tblRegistros.getColumnModel().getColumn(4).setPreferredWidth(5);
-		tblRegistros.getColumnModel().getColumn(5).setPreferredWidth(5);
-		tblRegistros.getColumnModel().getColumn(6).setPreferredWidth(5);
-		tblRegistros.getColumnModel().getColumn(7).setPreferredWidth(5);
-		tblRegistros.getColumnModel().getColumn(8).setPreferredWidth(5);
-		//color de fondo  encabezado
-		tblRegistros.getTableHeader().setBackground(new Color(255,255,153));
-		
-		//Posicion
-		DefaultTableCellRenderer tct = new DefaultTableCellRenderer();
-		tct.setHorizontalAlignment(SwingConstants.CENTER);
-		tblRegistros.getColumnModel().getColumn(0).setCellRenderer(tct);
-		
-		
-		
-	}
+
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnGuardar) {
 			actionPerformedBtnGuardar(e);
@@ -261,19 +278,83 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
 		
 		
 		tabbedPane.setSelectedIndex(1);
-		btnGuardar.setEnabled(true);
-	
+		tabbedPane.setEnabledAt(1, true);
+		tabbedPane.setEnabledAt(0, false);
+		habilitarBotonGuardar();
+		
 	}
 	protected void actionPerformedBtnEditar(ActionEvent e) {
 		
-		//pnRegistroEst.setVisible(false);
-		//pnNuevo.setVisible(true);
-		//btnGuardar.setEnabled(true);
+		tabbedPane.setSelectedIndex(1);
+		btnGuardar.setEnabled(true);
 
 	}
 	protected void actionPerformedBtnGuardar(ActionEvent e) {
+		
 		objcrud.insertarDatos(txtCedula.getText(), txtNombres.getText(), txtApellidos.getText(), txtEmail.getText(), 
 				txtUsuario.getText(), txtPass.getText(), cmbGenero.getSelectedItem().toString(),txtFechaNac.getText());
+		tabbedPane.setSelectedIndex(0);
+		tabbedPane.setEnabledAt(1, false);
+		btnGuardar.setEnabled(false);
 		
+	}
+	public void habilitarBotonGuardar() {
+		if(!txtCedula.getText().isEmpty()  && !txtNombres.getText().isEmpty()  && !txtApellidos.getText().isEmpty() 
+				&& !txtEmail.getText().isEmpty() && !txtUsuario.getText().isEmpty()  && !txtPass.getText().isEmpty() && 
+				!txtFechaNac.getText().isEmpty() )
+		{
+			btnGuardar.setEnabled(true);
+		
+		}else {
+		btnGuardar.setEnabled(false);
+		}
+	}
+	public void keyPressed(KeyEvent e) {
+	}
+	public void keyReleased(KeyEvent e) {
+		if (e.getSource() == txtPass) {
+			keyReleasedTxtPass(e);
+		}
+		if (e.getSource() == txtEmail) {
+			keyReleasedTxtEmail(e);
+		}
+		if (e.getSource() == txtNombres) {
+			keyReleasedTxtNombres(e);
+		}
+		if (e.getSource() == txtFechaNac) {
+			keyReleasedTxtFechaNac(e);
+		}
+		if (e.getSource() == txtUsuario) {
+			keyReleasedTxtUsuario(e);
+		}
+		if (e.getSource() == txtApellidos) {
+			keyReleasedTxtApellidos(e);
+		}
+		if (e.getSource() == txtCedula) {
+			keyReleasedTxtCedula(e);
+		}
+	}
+	public void keyTyped(KeyEvent e) {
+	}
+	protected void keyReleasedTxtCedula(KeyEvent e) {
+		habilitarBotonGuardar();
+	}
+	protected void keyReleasedTxtApellidos(KeyEvent e) {
+		habilitarBotonGuardar();
+	}
+	protected void keyReleasedTxtUsuario(KeyEvent e) {
+		habilitarBotonGuardar();
+	}
+	protected void keyReleasedTxtFechaNac(KeyEvent e) {
+		habilitarBotonGuardar();
+	}
+	protected void keyReleasedTxtNombres(KeyEvent e) {
+		habilitarBotonGuardar();
+	}
+	protected void keyReleasedTxtEmail(KeyEvent e) {
+		habilitarBotonGuardar();
+	}
+	protected void keyReleasedTxtPass(KeyEvent e) {
+		habilitarBotonGuardar();
 	}
 }
