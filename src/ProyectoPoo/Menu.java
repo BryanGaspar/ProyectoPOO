@@ -27,8 +27,11 @@ import java.awt.event.InputEvent;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
 
+import ProyectoPooParte2.Asignaturas;
+import ProyectoPooParte2.Periodos;
 import ProyectoPooParte2.RegistroCarreras;
 import ProyectoPooParte2.RegistroEstudiante;
+import ProyectoPooParte2.RegistroNiveles;
 
 public class Menu extends JFrame implements ActionListener {
 
@@ -148,6 +151,15 @@ public class Menu extends JFrame implements ActionListener {
 		if (e.getSource() == mnCarreras) {
 			actionPerformedMnCarreras(e);
 		}
+		if (e.getSource() == mnNiveles) {
+			actionPerformedMnNiveles(e);
+		}
+		if (e.getSource() == mnPeriodos) {
+			actionPerformedMnPeriodos(e);
+		}
+		if (e.getSource() == mnAsignaturas) {
+			actionPerformedMnAsignaturas(e);
+		}
 	}
 	protected void actionPerformedMnEstudiantes(ActionEvent e) {
 		RegistroEstudiante est = new RegistroEstudiante();
@@ -158,5 +170,20 @@ public class Menu extends JFrame implements ActionListener {
 		RegistroCarreras carr = new RegistroCarreras();
 		this.Desktop.add(carr);
 		carr.setVisible(true);
+	}
+	protected void actionPerformedMnNiveles(ActionEvent e) {
+		RegistroNiveles nivel = new RegistroNiveles();
+		this.Desktop.add(nivel);
+		nivel.setVisible(true);
+	}
+	protected void actionPerformedMnPeriodos(ActionEvent e) {
+		Periodos per = new Periodos();
+		this.Desktop.add(per);
+		per.setVisible(true);
+	}
+	protected void actionPerformedMnAsignaturas(ActionEvent e) {
+		Asignaturas asg = new Asignaturas();
+		this.Desktop.add(asg);
+		asg.setVisible(true);
 	}
 }
