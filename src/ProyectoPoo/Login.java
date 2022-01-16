@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Conexiones.administradores;
 import Conexiones.crudsql;
 
 import javax.swing.JLabel;
@@ -37,7 +38,7 @@ public class Login extends JFrame implements ActionListener {
 	private JButton btnIngresar;
 	private JPasswordField pass;
 	private JProgressBar progressBar;
-
+	crudsql objcrud = new crudsql();
 	
 	/**
 	 * Launch the application.
@@ -112,7 +113,7 @@ public class Login extends JFrame implements ActionListener {
 		progressBar.setBackground(SystemColor.window);
 		progressBar.setBounds(31, 167, 472, 14);
 		contentPane.add(progressBar);
-		crudsql objcrud = new crudsql();
+		
 	}
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnIngresar) {
@@ -122,6 +123,7 @@ public class Login extends JFrame implements ActionListener {
 	
 	@SuppressWarnings("unchecked")
 	protected void actionPerformedBtnNewButton(ActionEvent e) {
+		administradores mod = new administradores();
 		String usuario, passw;
 		Menu men = new Menu();
 		usuario = txtUsuario.getText();
@@ -129,7 +131,9 @@ public class Login extends JFrame implements ActionListener {
 		if(usuario.isEmpty() || passw.isEmpty()) {
 			JOptionPane.showMessageDialog(null,"Error, algun campo esta vacio");
 		} else {
-			if(usuario.equals("admin") && passw.equals("12345")) {
+			mod.setAdmin(usuario);
+			mod.setPass(passw);
+			if(objcrud.login(mod)) {
 				Thread hilo = new Thread() {
 					@Override
 					public void run() {
@@ -152,10 +156,16 @@ public class Login extends JFrame implements ActionListener {
 					}
 				};
 				hilo.start();
-				
-			} else {
+			}else {
 				JOptionPane.showMessageDialog(null,"Su usario o contraseña es incorrecta");
 			}
+			/*if(usuario.equals("admin") && passw.equals("12345")) {
+				
+				
+				
+			} else {
+			
+			}*/
 		}
 		
 		 

@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+import ProyectoPoo.Login;
+
 
 public class crudsql {
 	Conexion con = new Conexion();
@@ -82,6 +84,55 @@ public class crudsql {
             }
         }
          return modelo;
+	}
+	public boolean login(administradores usr) {
+		String sql = "SELECT Usuario, Pass FROM Administrador Where Usuario = ?";
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Connection cn = null;
+		try
+        {
+            cn = con.crearConexion();
+            
+            ps = cn.prepareStatement(sql);                        
+            ps.setString(1, usr.getAdmin());
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+            	if(usr.getPass().equals(rs.getString(2))) {
+            		usr.setAdmin(rs.getString(1));
+            		usr.setPass(rs.getString(2));
+            		return true;
+            	}
+            	else{
+            	return false;
+            	}
+            }
+            return false;
+        }
+        catch(SQLException e)
+        {
+            
+            JOptionPane.showMessageDialog(null,"Error al conectar");
+            return false;
+            
+        }
+        finally
+        {
+            try
+            {
+                if (rs != null) rs.close();
+                
+                if (ps != null) ps.close();
+                
+                if (cn != null) cn.close();
+            }
+            catch(SQLException e)
+            {
+                JOptionPane.showMessageDialog(null,e);
+            }
+        }   
+		
 	}
 	
 	public void insertarDatos(String Cedula,String Nombres,String Apellidos,String Usuario,String Email,String Contrasenia,String Genero,String FechaNac) {
