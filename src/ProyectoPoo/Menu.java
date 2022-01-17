@@ -32,6 +32,9 @@ import ProyectoPooParte2.Periodos;
 import ProyectoPooParte2.RegistroCarreras;
 import ProyectoPooParte2.RegistroEstudiante;
 import ProyectoPooParte2.RegistroNiveles;
+import ProyectoPooParte3.CertificadoMatricula;
+import ProyectoPooParte3.MatriculacionEst;
+import ProyectoPooParte3.ReporteEstudiantes;
 
 public class Menu extends JFrame implements ActionListener {
 
@@ -42,14 +45,17 @@ public class Menu extends JFrame implements ActionListener {
 	private JMenuItem mnPeriodos;
 	private JMenuItem mnAsignaturas;
 	private JMenuItem mnMatriculacion;
-	private JMenuItem mnEstudiantesMatriculados;
-	private JMenuItem mnCertificadoMatricula;
+	private JMenuItem mnEstMat;
+	private JMenuItem mnCertMat;
 	private JDesktopPane Desktop;
 	RegistroEstudiante est = new RegistroEstudiante();
 	RegistroCarreras carr = new RegistroCarreras();
 	RegistroNiveles nivel = new RegistroNiveles();
 	Asignaturas asg = new Asignaturas();
 	Periodos per = new Periodos();
+	MatriculacionEst matEst = new MatriculacionEst();
+	ReporteEstudiantes repEst = new ReporteEstudiantes();
+	CertificadoMatricula certMat = new CertificadoMatricula();
 
 	/**
 	 * Launch the application.
@@ -127,17 +133,17 @@ public class Menu extends JFrame implements ActionListener {
 		mnReportes.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		menuBar.add(mnReportes);
 		
-		mnEstudiantesMatriculados = new JMenuItem("Estudiantes Matriculados");
-		mnEstudiantesMatriculados.addActionListener(this);
-		mnEstudiantesMatriculados.setIcon(new ImageIcon(Menu.class.getResource("/ProyectoPoo/ImagenesProyecto/inbox-5-16.png")));
-		mnEstudiantesMatriculados.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		mnReportes.add(mnEstudiantesMatriculados);
+		mnEstMat = new JMenuItem("Estudiantes Matriculados");
+		mnEstMat.addActionListener(this);
+		mnEstMat.setIcon(new ImageIcon(Menu.class.getResource("/ProyectoPoo/ImagenesProyecto/inbox-5-16.png")));
+		mnEstMat.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		mnReportes.add(mnEstMat);
 		
-		mnCertificadoMatricula = new JMenuItem("Certificado de Matricula");
-		mnCertificadoMatricula.addActionListener(this);
-		mnCertificadoMatricula.setIcon(new ImageIcon(Menu.class.getResource("/ProyectoPoo/ImagenesProyecto/pdf-file-16.png")));
-		mnCertificadoMatricula.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		mnReportes.add(mnCertificadoMatricula);
+		mnCertMat = new JMenuItem("Certificado de Matricula");
+		mnCertMat.addActionListener(this);
+		mnCertMat.setIcon(new ImageIcon(Menu.class.getResource("/ProyectoPoo/ImagenesProyecto/pdf-file-16.png")));
+		mnCertMat.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		mnReportes.add(mnCertMat);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -165,11 +171,61 @@ public class Menu extends JFrame implements ActionListener {
 		if (e.getSource() == mnAsignaturas) {
 			actionPerformedMnAsignaturas(e);
 		}
+		if (e.getSource() == mnMatriculacion) {
+			actionPerformedMnMatriculacion(e);
+		}
+		if (e.getSource() == mnEstMat) {
+			actionPerformedmnEstMat(e);
+		}
+		if (e.getSource() == mnCertMat) {
+			actionPerformedmnCertMat(e);
+		}
 	}
+protected void actionPerformedmnCertMat(ActionEvent e) {
+		
+		this.Desktop.add(certMat);
+		certMat.setVisible(true);
+		matEst.dispose();
+		repEst.dispose();
+		est.dispose();
+		carr.dispose();
+		nivel.dispose();
+		per.dispose();
+		asg.dispose();
+	}
+protected void actionPerformedmnEstMat(ActionEvent e) {
+	
+	this.Desktop.add(repEst);
+	repEst.setVisible(true);
+	certMat.dispose();
+	matEst.dispose();
+	est.dispose();
+	carr.dispose();
+	nivel.dispose();
+	per.dispose();
+	asg.dispose();
+}
+
+protected void actionPerformedMnMatriculacion(ActionEvent e) {
+		
+		this.Desktop.add(matEst);
+		matEst.setVisible(true);
+		repEst.dispose();
+		certMat.dispose();
+		est.dispose();
+		carr.dispose();
+		nivel.dispose();
+		per.dispose();
+		asg.dispose();
+	}
+	
 	protected void actionPerformedMnEstudiantes(ActionEvent e) {
 		
 		this.Desktop.add(est);
 		est.setVisible(true);
+		certMat.dispose();
+		repEst.dispose();
+		matEst.dispose();
 		carr.dispose();
 		nivel.dispose();
 		per.dispose();
@@ -179,7 +235,10 @@ public class Menu extends JFrame implements ActionListener {
 		est.dispose();
 		nivel.dispose();
 		per.dispose();
+		repEst.dispose();
 		asg.dispose();
+		certMat.dispose();
+		matEst.dispose();
 		this.Desktop.add(carr);
 		carr.setVisible(true);
 	}
@@ -187,6 +246,9 @@ public class Menu extends JFrame implements ActionListener {
 		
 		this.Desktop.add(nivel);
 		nivel.setVisible(true);
+		certMat.dispose();
+		matEst.dispose();
+		repEst.dispose();
 		est.dispose();
 		carr.dispose();
 		per.dispose();
@@ -196,6 +258,9 @@ public class Menu extends JFrame implements ActionListener {
 		
 		this.Desktop.add(per);
 		per.setVisible(true);
+		certMat.dispose();
+		matEst.dispose();
+		repEst.dispose();
 		est.dispose();
 		nivel.dispose();
 		carr.dispose();
@@ -205,6 +270,9 @@ public class Menu extends JFrame implements ActionListener {
 		
 		this.Desktop.add(asg);
 		asg.setVisible(true);
+		certMat.dispose();
+		matEst.dispose();
+		repEst.dispose();
 		est.dispose();
 		nivel.dispose();
 		per.dispose();
