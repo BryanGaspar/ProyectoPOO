@@ -14,7 +14,7 @@ import ProyectoPooParte2.RegistroEstudiante;
 public class crudsql {
 	Conexion con = new Conexion();
 	public void eliminarEstudiante() {
-		String sql = "DELETE FROM Estudiante WHERE Cedula=?";
+		String sql = "DELETE FROM estudiante WHERE Cedula=?";
 		DefaultTableModel modelo = new DefaultTableModel();
         Connection cn = null;
         
@@ -63,7 +63,7 @@ public class crudsql {
 	
 	
 	public void ActualizarEstudiantes() {
-		String sql = "SELECT Cedula, Nombres, Apellidos, Usuario,Email, Contrasenia ,Genero, FechaNac FROM Estudiante WHERE Cedula=?";
+		String sql = "SELECT Cedula, Nombres, Apellidos, Direccion ,Email, Telefono ,Genero, FechaNac FROM estudiante WHERE Cedula=?";
         
         Connection cn = null;
         
@@ -120,12 +120,12 @@ public class crudsql {
 		
 	}
 	public DefaultTableModel mostrarEstudiantes() {
-		String []  nombresColumnas = {"Cedula","Nombres","Apellidos","Usuario","Email","Contraseña","Genero","Fecha Nac"};
+		String []  nombresColumnas = {"Cedula","Nombres","Apellidos","Direccion","Email","Telefono","Genero","Fecha Nac"};
         String [] registros = new String[8];
         
         DefaultTableModel modelo = new DefaultTableModel(null,nombresColumnas);
         
-        String sql = "SELECT * FROM Estudiante";
+        String sql = "SELECT * FROM estudiante";
         
         Connection cn = null;
         
@@ -150,11 +150,11 @@ public class crudsql {
                 
                 registros[2] = rs.getString("Apellidos");
                 
-                registros[3] = rs.getString("Usuario");
+                registros[3] = rs.getString("Direccion");
                 
                 registros[4] = rs.getString("Email");
                 
-                registros[5] = rs.getString("Contrasenia");
+                registros[5] = rs.getString("Telefono");
                 
                 registros[6] = rs.getString("Genero");
                 
@@ -240,12 +240,12 @@ public class crudsql {
 		
 	}
 	
-	public void insertarDatos(String Cedula,String Nombres,String Apellidos,String Usuario,String Email,String Contrasenia,String Genero,String FechaNac) {
+	public void insertarDatos(String Cedula,String Nombres,String Apellidos,String Direccion,String Email,String Telefono,String Genero,String FechaNac) {
 		try {
 			Connection conexion = con.crearConexion();
 			java.sql.Statement st = conexion.createStatement();
-			String sql ="INSERT INTO Estudiante(Cedula,Nombres,Apellidos,Usuario,Email,Contrasenia,Genero,FechaNac) VALUES('"+Cedula+"','"+Nombres+"','"+Apellidos+
-					"','"+Usuario+"','"+Email+"','"+Contrasenia+"','"+Genero+"','"+FechaNac+"')" ;
+			String sql ="INSERT INTO estudiante(Cedula,Nombres,Apellidos,Direccion,Email,Telefono,Genero,FechaNac) VALUES('"+Cedula+"','"+Nombres+"','"+Apellidos+
+					"','"+Direccion+"','"+Email+"','"+Telefono+"','"+Genero+"','"+FechaNac+"')" ;
 			st.execute(sql);
 			st.close();
 			conexion.close();

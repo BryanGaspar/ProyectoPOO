@@ -4,13 +4,13 @@ import java.sql.*;
 import javax.swing.JOptionPane;
 public class Conexion {
 	Connection conexion = null;
-	static final String URL = "jdbc:postgresql://localhost:5432/Matriculacion";
-	static final String USER = "postgres";
-	static final String PASS = "Pucese2021";
+	static final String URL = "jdbc:mysql://localhost:3306/matriculacion";
+	static final String USER = "root";
+	static final String PASS = "";
 	
 	public Connection crearConexion(){
 		try {
-		Class.forName("org.postgresql.Driver");
+		Class.forName("com.mysql.cj.jdbc.Driver");
 		 conexion = DriverManager.getConnection(URL, USER, PASS);
 		
 		} catch(Exception e) {
