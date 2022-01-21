@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-import ProyectoPoo.Login;
 import ProyectoPooParte2.RegistroEstudiante;
 
 
@@ -191,7 +190,7 @@ public class crudsql {
          return modelo;
 	}
 	public boolean login(administradores usr) {
-		String sql = "SELECT Usuario, Pass FROM Administrador Where Usuario = ?";
+		String sql = "SELECT Usuario, Pass FROM administrador Where Usuario = ?";
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		Connection cn = null;

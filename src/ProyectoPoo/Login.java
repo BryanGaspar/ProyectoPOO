@@ -159,13 +159,7 @@ public class Login extends JFrame implements ActionListener {
 			}else {
 				JOptionPane.showMessageDialog(null,"Su usario o contraseña es incorrecta");
 			}
-			/*if(usuario.equals("admin") && passw.equals("12345")) {
-				
-				
-				
-			} else {
 			
-			}*/
 		}
 		
 		 

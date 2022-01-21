@@ -10,12 +10,14 @@ public class Conexion {
 	
 	public Connection crearConexion(){
 		try {
-		Class.forName("com.mysql.cj.jdbc.Driver");
+		Class.forName("com.mysql.jdbc.Driver");
 		 conexion = DriverManager.getConnection(URL, USER, PASS);
 		
-		} catch(Exception e) {
+		} 
+		catch(Exception e) {
 			
-				JOptionPane.showMessageDialog(null, "error al conectar "+e,"Error",JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "error al conectar " + e,"Error",JOptionPane.ERROR_MESSAGE);
+				e.printStackTrace();
 		}
 		return conexion;
 		

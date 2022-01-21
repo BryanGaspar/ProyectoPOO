@@ -56,16 +56,16 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
 	private JLabel lblCedula;
 	private JLabel lblFechaNac;
 	private JLabel lblCorreo;
-	private JLabel lblPass;
+	private JLabel lblTelefono;
 	private JLabel lblGenero;
-	private JLabel lblUsuario;
+	private JLabel lblDireccion;
 	public JTextField txtFechaNac;
-	public JTextField txtUsuario;
+	public JTextField txtDireccion;
 	public JTextField txtEmail;
 	public JTextField txtApellidos;
 	public JTextField txtNombres;
 	public JTextField txtCedula;
-	public JTextField txtPass;
+	public JTextField txtTelefono;
 	public JComboBox cmbGenero;
 	public JTable tblRegistros;
 
@@ -200,20 +200,20 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
 		lblCorreo.setFont(new Font("Tahoma", Font.BOLD, 12));
 		pnNuevo.add(lblCorreo);
 		
-		lblPass = new JLabel("Contrase\u00F1a:");
-		lblPass.setBounds(28, 184, 74, 15);
-		lblPass.setFont(new Font("Tahoma", Font.BOLD, 12));
-		pnNuevo.add(lblPass);
+		lblTelefono = new JLabel("Telefono:");
+		lblTelefono.setBounds(28, 184, 74, 15);
+		lblTelefono.setFont(new Font("Tahoma", Font.BOLD, 12));
+		pnNuevo.add(lblTelefono);
 		
 		lblGenero = new JLabel("Genero:");
 		lblGenero.setBounds(259, 32, 47, 15);
 		lblGenero.setFont(new Font("Tahoma", Font.BOLD, 12));
 		pnNuevo.add(lblGenero);
 		
-		lblUsuario = new JLabel("Usuario:");
-		lblUsuario.setBounds(28, 148, 49, 15);
-		lblUsuario.setFont(new Font("Tahoma", Font.BOLD, 12));
-		pnNuevo.add(lblUsuario);
+		lblDireccion = new JLabel("Direccion:");
+		lblDireccion.setBounds(28, 148, 74, 15);
+		lblDireccion.setFont(new Font("Tahoma", Font.BOLD, 12));
+		pnNuevo.add(lblDireccion);
 		
 		txtFechaNac = new JTextField();
 		txtFechaNac.addKeyListener(this);
@@ -221,11 +221,11 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
 		txtFechaNac.setColumns(10);
 		pnNuevo.add(txtFechaNac);
 		
-		txtUsuario = new JTextField();
-		txtUsuario.addKeyListener(this);
-		txtUsuario.setBounds(118, 146, 86, 20);
-		txtUsuario.setColumns(10);
-		pnNuevo.add(txtUsuario);
+		txtDireccion = new JTextField();
+		txtDireccion.addKeyListener(this);
+		txtDireccion.setBounds(118, 146, 86, 20);
+		txtDireccion.setColumns(10);
+		pnNuevo.add(txtDireccion);
 		
 		txtEmail = new JTextField();
 		txtEmail.addKeyListener(this);
@@ -251,11 +251,11 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
 		txtCedula.setColumns(10);
 		pnNuevo.add(txtCedula);
 		
-		txtPass = new JTextField();
-		txtPass.addKeyListener(this);
-		txtPass.setBounds(118, 182, 86, 20);
-		txtPass.setColumns(10);
-		pnNuevo.add(txtPass);
+		txtTelefono = new JTextField();
+		txtTelefono.addKeyListener(this);
+		txtTelefono.setBounds(118, 182, 86, 20);
+		txtTelefono.setColumns(10);
+		pnNuevo.add(txtTelefono);
 		
 		cmbGenero = new JComboBox();
 		cmbGenero.setModel(new DefaultComboBoxModel(new String[] {"Masculino", "Femenino"}));
@@ -300,7 +300,7 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
 	protected void actionPerformedBtnGuardar(ActionEvent e) {
 		
 		objcrud.insertarDatos(txtCedula.getText(), txtNombres.getText(), txtApellidos.getText(), txtEmail.getText(), 
-				txtUsuario.getText(), txtPass.getText(), cmbGenero.getSelectedItem().toString(),txtFechaNac.getText());
+				txtDireccion.getText(), txtTelefono.getText(), cmbGenero.getSelectedItem().toString(),txtFechaNac.getText());
 		tabbedPane.setSelectedIndex(0);
 		tabbedPane.setEnabledAt(1, false);
 		btnGuardar.setEnabled(false);
@@ -308,7 +308,7 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
 	}
 	public void habilitarBotonGuardar() {
 		if(!txtCedula.getText().isEmpty()  && !txtNombres.getText().isEmpty()  && !txtApellidos.getText().isEmpty() 
-				&& !txtEmail.getText().isEmpty() && !txtUsuario.getText().isEmpty()  && !txtPass.getText().isEmpty() && 
+				&& !txtEmail.getText().isEmpty() && !txtDireccion.getText().isEmpty()  && !txtTelefono.getText().isEmpty() && 
 				!txtFechaNac.getText().isEmpty() )
 		{
 			btnGuardar.setEnabled(true);
@@ -320,7 +320,7 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
 	public void keyPressed(KeyEvent e) {
 	}
 	public void keyReleased(KeyEvent e) {
-		if (e.getSource() == txtPass) {
+		if (e.getSource() == txtTelefono) {
 			keyReleasedTxtPass(e);
 		}
 		if (e.getSource() == txtEmail) {
@@ -332,7 +332,7 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
 		if (e.getSource() == txtFechaNac) {
 			keyReleasedTxtFechaNac(e);
 		}
-		if (e.getSource() == txtUsuario) {
+		if (e.getSource() == txtDireccion) {
 			keyReleasedTxtUsuario(e);
 		}
 		if (e.getSource() == txtApellidos) {
@@ -394,9 +394,9 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
        txtCedula.setText(cedula);
        txtNombres.setText(nombres);
        txtApellidos.setText(apellidos);
-       txtUsuario.setText(usuario);
+       txtDireccion.setText(usuario);
        txtEmail.setText(email);
-       txtPass.setText(pass);
+       txtTelefono.setText(pass);
        cmbGenero.getSelectedItem();
         txtFechaNac.setText(fechaN);
 		
