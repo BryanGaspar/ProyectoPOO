@@ -28,10 +28,8 @@ import java.awt.Color;
 import javax.swing.border.LineBorder;
 
 import ProyectoPooParte2.Asignaturas;
-import ProyectoPooParte2.Periodos;
 import ProyectoPooParte2.RegistroCarreras;
 import ProyectoPooParte2.RegistroEstudiante;
-import ProyectoPooParte2.RegistroNiveles;
 import ProyectoPooParte3.CertificadoMatricula;
 import ProyectoPooParte3.MatriculacionEst;
 import ProyectoPooParte3.ReporteEstudiantes;
@@ -41,8 +39,6 @@ public class Menu extends JFrame implements ActionListener {
 	private JPanel contentPane;
 	private JMenuItem mnEstudiantes;
 	private JMenuItem mnCarreras;
-	private JMenuItem mnNiveles;
-	private JMenuItem mnPeriodos;
 	private JMenuItem mnAsignaturas;
 	private JMenuItem mnMatriculacion;
 	private JMenuItem mnEstMat;
@@ -50,9 +46,7 @@ public class Menu extends JFrame implements ActionListener {
 	private JDesktopPane Desktop;
 	RegistroEstudiante est = new RegistroEstudiante();
 	RegistroCarreras carr = new RegistroCarreras();
-	RegistroNiveles nivel = new RegistroNiveles();
 	Asignaturas asg = new Asignaturas();
-	Periodos per = new Periodos();
 	MatriculacionEst matEst = new MatriculacionEst();
 	ReporteEstudiantes repEst = new ReporteEstudiantes();
 	CertificadoMatricula certMat = new CertificadoMatricula();
@@ -101,16 +95,6 @@ public class Menu extends JFrame implements ActionListener {
 		mnCarreras.addActionListener(this);
 		mnCarreras.setIcon(new ImageIcon(Menu.class.getResource("/ProyectoPoo/ImagenesProyecto/engineering-16.png")));
 		mnArchivo.add(mnCarreras);
-		
-		mnNiveles = new JMenuItem("Niveles");
-		mnNiveles.addActionListener(this);
-		mnNiveles.setIcon(new ImageIcon(Menu.class.getResource("/ProyectoPoo/ImagenesProyecto/arrow-11-16.png")));
-		mnArchivo.add(mnNiveles);
-		
-		mnPeriodos = new JMenuItem("Periodos");
-		mnPeriodos.addActionListener(this);
-		mnPeriodos.setIcon(new ImageIcon(Menu.class.getResource("/ProyectoPoo/ImagenesProyecto/add-list-16.png")));
-		mnArchivo.add(mnPeriodos);
 		
 		mnAsignaturas = new JMenuItem("Asignaturas");
 		mnAsignaturas.addActionListener(this);
@@ -162,12 +146,6 @@ public class Menu extends JFrame implements ActionListener {
 		if (e.getSource() == mnCarreras) {
 			actionPerformedMnCarreras(e);
 		}
-		if (e.getSource() == mnNiveles) {
-			actionPerformedMnNiveles(e);
-		}
-		if (e.getSource() == mnPeriodos) {
-			actionPerformedMnPeriodos(e);
-		}
 		if (e.getSource() == mnAsignaturas) {
 			actionPerformedMnAsignaturas(e);
 		}
@@ -185,97 +163,37 @@ protected void actionPerformedmnCertMat(ActionEvent e) {
 		
 		this.Desktop.add(certMat);
 		certMat.setVisible(true);
-		matEst.dispose();
-		repEst.dispose();
-		est.dispose();
-		carr.dispose();
-		nivel.dispose();
-		per.dispose();
-		asg.dispose();
+
 	}
 protected void actionPerformedmnEstMat(ActionEvent e) {
 	
 	this.Desktop.add(repEst);
 	repEst.setVisible(true);
-	certMat.dispose();
-	matEst.dispose();
-	est.dispose();
-	carr.dispose();
-	nivel.dispose();
-	per.dispose();
-	asg.dispose();
+
+	
 }
 
 protected void actionPerformedMnMatriculacion(ActionEvent e) {
 		
 		this.Desktop.add(matEst);
 		matEst.setVisible(true);
-		repEst.dispose();
-		certMat.dispose();
-		est.dispose();
-		carr.dispose();
-		nivel.dispose();
-		per.dispose();
-		asg.dispose();
 	}
 	
 	protected void actionPerformedMnEstudiantes(ActionEvent e) {
 		
 		this.Desktop.add(est);
 		est.setVisible(true);
-		certMat.dispose();
-		repEst.dispose();
-		matEst.dispose();
-		carr.dispose();
-		nivel.dispose();
-		per.dispose();
-		asg.dispose();
+
+	
 	}
 	protected void actionPerformedMnCarreras(ActionEvent e) {
-		est.dispose();
-		nivel.dispose();
-		per.dispose();
-		repEst.dispose();
-		asg.dispose();
-		certMat.dispose();
-		matEst.dispose();
 		this.Desktop.add(carr);
 		carr.setVisible(true);
-	}
-	protected void actionPerformedMnNiveles(ActionEvent e) {
-		
-		this.Desktop.add(nivel);
-		nivel.setVisible(true);
-		certMat.dispose();
-		matEst.dispose();
-		repEst.dispose();
-		est.dispose();
-		carr.dispose();
-		per.dispose();
-		asg.dispose();
-	}
-	protected void actionPerformedMnPeriodos(ActionEvent e) {
-		
-		this.Desktop.add(per);
-		per.setVisible(true);
-		certMat.dispose();
-		matEst.dispose();
-		repEst.dispose();
-		est.dispose();
-		nivel.dispose();
-		carr.dispose();
-		asg.dispose();
 	}
 	protected void actionPerformedMnAsignaturas(ActionEvent e) {
 		
 		this.Desktop.add(asg);
 		asg.setVisible(true);
-		certMat.dispose();
-		matEst.dispose();
-		repEst.dispose();
-		est.dispose();
-		nivel.dispose();
-		per.dispose();
-		carr.dispose();
+
 	}
 }

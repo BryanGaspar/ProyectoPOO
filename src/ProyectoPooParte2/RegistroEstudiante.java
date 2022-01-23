@@ -10,12 +10,19 @@ import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 
+
+import Conexiones.Estudiante;
 import Conexiones.crudsql;
+import Enums.Genero;
+
+
 
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JToggleButton;
@@ -34,20 +41,22 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTabbedPane;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
-import javax.swing.JScrollPane;
-import java.awt.Scrollbar;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.MouseListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.text.ParseException;
 import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
 
-public class RegistroEstudiante extends JInternalFrame implements ActionListener, KeyListener, MouseListener {
+public class RegistroEstudiante extends JInternalFrame implements ActionListener, MouseListener {
 	private JPanel panel;
 	private JButton btnNuevo;
 	private JButton btnGuardar;
 	private JButton btnEditar;
 	private JButton btnEliminar;
-	crudsql objcrud = new crudsql();
+	
 	private JTabbedPane tabbedPane;
 	private JPanel pnRegistroEst;
 	private JPanel pnNuevo;
@@ -59,7 +68,6 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
 	private JLabel lblTelefono;
 	private JLabel lblGenero;
 	private JLabel lblDireccion;
-	public JTextField txtFechaNac;
 	public JTextField txtDireccion;
 	public JTextField txtEmail;
 	public JTextField txtApellidos;
@@ -68,7 +76,10 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
 	public JTextField txtTelefono;
 	public JComboBox cmbGenero;
 	public JTable tblRegistros;
-
+	private JTextField txtFechaNac;
+	crudsql objcrud = new crudsql();
+	Estudiante mod = new Estudiante();
+	private JButton btnGuardarM;
 	/**
 	 * Launch the application.
 	 */
@@ -96,19 +107,19 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
 		setClosable(true);
 		setResizable(true);
 		setIconifiable(true);
-		setBounds(100, 100, 654, 349);
+		setBounds(100, 100, 650, 349);
 		getContentPane().setLayout(null);
 		
 		panel = new JPanel();
-		panel.setBorder(new TitledBorder(null, "Opciones", TitledBorder.CENTER, TitledBorder.TOP, null, null));
-		panel.setBounds(490, 11, 138, 275);
+		panel.setBounds(494, 29, 130, 290);
 		getContentPane().add(panel);
+		panel.setBorder(new TitledBorder(null, "Opciones", TitledBorder.CENTER, TitledBorder.TOP, null, null));
 		panel.setLayout(null);
 		
 		btnNuevo = new JButton("Nuevo");
 		btnNuevo.setBackground(UIManager.getColor("Button.highlight"));
 		btnNuevo.addActionListener(this);
-		btnNuevo.setBounds(17, 21, 111, 41);
+		btnNuevo.setBounds(10, 21, 111, 41);
 		btnNuevo.setIcon(new ImageIcon(RegistroEstudiante.class.getResource("/ProyectoPoo/ImagenesProyecto/add-image-16.png")));
 		panel.add(btnNuevo);
 		
@@ -117,7 +128,7 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
 		btnGuardar.setBackground(UIManager.getColor("Button.highlight"));
 		btnGuardar.setEnabled(false);
 		btnGuardar.setIcon(new ImageIcon(RegistroEstudiante.class.getResource("/ProyectoPoo/ImagenesProyecto/folder-3-16.png")));
-		btnGuardar.setBounds(17, 81, 111, 41);
+		btnGuardar.setBounds(10, 82, 111, 41);
 		panel.add(btnGuardar);
 		
 		btnEditar = new JButton("Editar");
@@ -125,15 +136,23 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
 		btnEditar.addActionListener(this);
 		btnEditar.setEnabled(false);
 		btnEditar.setIcon(new ImageIcon(RegistroEstudiante.class.getResource("/ProyectoPoo/ImagenesProyecto/edit-property-16.png")));
-		btnEditar.setBounds(17, 151, 111, 41);
+		btnEditar.setBounds(10, 148, 111, 41);
 		panel.add(btnEditar);
 		
 		btnEliminar = new JButton("Eliminar");
+		btnEliminar.addActionListener(this);
 		btnEliminar.setBackground(UIManager.getColor("Button.highlight"));
 		btnEliminar.setEnabled(false);
 		btnEliminar.setIcon(new ImageIcon(RegistroEstudiante.class.getResource("/ProyectoPoo/ImagenesProyecto/delete-16.png")));
-		btnEliminar.setBounds(17, 203, 111, 41);
+		btnEliminar.setBounds(10, 199, 111, 41);
 		panel.add(btnEliminar);
+		
+		btnGuardarM = new JButton("Guardar");
+		btnGuardarM.addActionListener(this);
+		btnGuardarM.setVisible(false);
+		btnGuardarM.setIcon(new ImageIcon(RegistroEstudiante.class.getResource("/ProyectoPoo/ImagenesProyecto/folder-3-16.png")));
+		btnGuardarM.setBounds(10, 82, 111, 41);
+		panel.add(btnGuardarM);
 		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(0, 0, 638, 319);
@@ -142,37 +161,18 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
 		pnRegistroEst = new JPanel();
 		
 		tabbedPane.addTab("Registro Estudiantes", null, pnRegistroEst, null);
+		tabbedPane.setEnabledAt(0, true);
 		pnRegistroEst.setLayout(null);
 		
 		tblRegistros = new JTable();
 		tblRegistros.addMouseListener(this);
-		tblRegistros.setBackground(Color.WHITE);
-		tblRegistros.setBounds(10, 11, 463, 248);
-		tblRegistros.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"12345678", "Bryan", "Apellidos", "bryan202gaspar@hotmail.com", "BGaspar", "12345", "Masculino", "2002-11-12"},
-				{"123456", "gas", "asdf", "1asdasd", "dad", "12345", "Masculino", "2001-08-12"},
-				{"123", "asd", "da", "das", "dsa", "123", "Masculino", "2002-04-12"},
-				{"1234", "adsasd", "dasasd", "asdad", "dasasd", "123", "Masculino", "2002-04-12"},
-				{"850594573", "BRYAN", "GASPAR", "BRYAN202GASPAR@HOTMAIL.COM", "BGASPAR", "12345", "Masculino", "2002-04-02"},
-				{"5647131", "BRYAN", "GASPAR", "BRYAN2@HOTMAIL", "ASDW2", "12345", "Masculino", "2002-04-02"},
-			},
-			new String[] {
-				"Cedula", "Nombres", "Apellidos", "Usuario", "Email", "Contrase\u00F1a", "Genero", "Fecha Nac"
-			}
-		) {
-			boolean[] columnEditables = new boolean[] {
-				false, false, false, false, false, false, false, false
-			};
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
+		tblRegistros.setBounds(22, 32, 446, 214);
+		tblRegistros.setModel(objcrud.mostrarEstudiantes());
 		pnRegistroEst.add(tblRegistros);
 		
 		pnNuevo = new JPanel();
 		tabbedPane.addTab("Nuevo/Modificar", null, pnNuevo, null);
-		tabbedPane.setEnabledAt(1, false);
+		tabbedPane.setEnabledAt(1, true);
 		pnNuevo.setLayout(null);
 		
 		lblNombres = new JLabel("Nombres:");
@@ -215,59 +215,64 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
 		lblDireccion.setFont(new Font("Tahoma", Font.BOLD, 12));
 		pnNuevo.add(lblDireccion);
 		
-		txtFechaNac = new JTextField();
-		txtFechaNac.addKeyListener(this);
-		txtFechaNac.setBounds(338, 56, 86, 20);
-		txtFechaNac.setColumns(10);
-		pnNuevo.add(txtFechaNac);
-		
 		txtDireccion = new JTextField();
-		txtDireccion.addKeyListener(this);
+		
 		txtDireccion.setBounds(118, 146, 86, 20);
 		txtDireccion.setColumns(10);
 		pnNuevo.add(txtDireccion);
 		
 		txtEmail = new JTextField();
-		txtEmail.addKeyListener(this);
+		
 		txtEmail.setBounds(118, 120, 86, 20);
 		txtEmail.setColumns(10);
 		pnNuevo.add(txtEmail);
 		
 		txtApellidos = new JTextField();
-		txtApellidos.addKeyListener(this);
+		;
 		txtApellidos.setBounds(118, 89, 86, 20);
 		txtApellidos.setColumns(10);
 		pnNuevo.add(txtApellidos);
 		
 		txtNombres = new JTextField();
-		txtNombres.addKeyListener(this);
+		
 		txtNombres.setBounds(118, 58, 86, 20);
 		txtNombres.setColumns(10);
 		pnNuevo.add(txtNombres);
 		
 		txtCedula = new JTextField();
-		txtCedula.addKeyListener(this);
+		
 		txtCedula.setBounds(118, 30, 86, 20);
 		txtCedula.setColumns(10);
 		pnNuevo.add(txtCedula);
 		
 		txtTelefono = new JTextField();
-		txtTelefono.addKeyListener(this);
+	
 		txtTelefono.setBounds(118, 182, 86, 20);
 		txtTelefono.setColumns(10);
 		pnNuevo.add(txtTelefono);
 		
 		cmbGenero = new JComboBox();
-		cmbGenero.setModel(new DefaultComboBoxModel(new String[] {"Masculino", "Femenino"}));
+		cmbGenero.setModel(new DefaultComboBoxModel(Genero.values()));
 		cmbGenero.setBounds(338, 28, 86, 23);
 		cmbGenero.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		pnNuevo.add(cmbGenero);
+		
+		txtFechaNac = new JTextField();
+		txtFechaNac.setBounds(338, 56, 86, 20);
+		pnNuevo.add(txtFechaNac);
+		txtFechaNac.setColumns(10);
 		
 		
 
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnEliminar) {
+			actionPerformedBtnEliminar(e);
+		}
+		if (e.getSource() == btnGuardarM) {
+			actionPerformedBtnGuardarM(e);
+		}
 		if (e.getSource() == btnGuardar) {
 			actionPerformedBtnGuardar(e);
 		}
@@ -282,92 +287,58 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
 		
 		
 		tabbedPane.setSelectedIndex(1);
-		tabbedPane.setEnabledAt(1, true);
-		tabbedPane.setEnabledAt(0, false);
-		habilitarBotonGuardar();
+	
+		btnGuardar.setEnabled(true);
+		limpiar();
 		
 	}
 	protected void actionPerformedBtnEditar(ActionEvent e) {
 		
 		tabbedPane.setSelectedIndex(1);
-		tabbedPane.setEnabledAt(1, true);
-		tabbedPane.setEnabledAt(0, false);
-		habilitarBotonGuardar();
-		btnNuevo.setEnabled(false);
+
+		btnGuardar.setVisible(false);
+		btnGuardarM.setVisible(true);
 		
 
 	}
 	protected void actionPerformedBtnGuardar(ActionEvent e) {
-		
-		objcrud.insertarDatos(txtCedula.getText(), txtNombres.getText(), txtApellidos.getText(), txtEmail.getText(), 
-				txtDireccion.getText(), txtTelefono.getText(), cmbGenero.getSelectedItem().toString(),txtFechaNac.getText());
-		tabbedPane.setSelectedIndex(0);
-		tabbedPane.setEnabledAt(1, false);
-		btnGuardar.setEnabled(false);
-		
+			
+		 	mod.setCedula(Integer.parseInt(txtCedula.getText()));
+			mod.setNombres(txtNombres.getText());
+			mod.setApellidos(txtApellidos.getText());
+			mod.setDireccion(txtDireccion.getText());
+			mod.setEmail(txtEmail.getText());
+			mod.setTelefono(Integer.parseInt(txtTelefono.getText()));
+			mod.setGenero(String.valueOf(cmbGenero.getSelectedItem()));
+			mod.setFechaNac(txtFechaNac.getText());
+			if(objcrud.registrar(mod))
+			{
+				JOptionPane.showMessageDialog(null, "Registro Guardado");
+				tabbedPane.setSelectedIndex(0);
+				tabbedPane.setEnabledAt(1, false);
+				btnGuardar.setEnabled(false);
+				btnNuevo.setEnabled(true);
+				limpiar();
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Error al Guardar");
+				btnGuardar.setEnabled(true);
+				limpiar();
+			}
+			
+	
 	}
-	public void habilitarBotonGuardar() {
-		if(!txtCedula.getText().isEmpty()  && !txtNombres.getText().isEmpty()  && !txtApellidos.getText().isEmpty() 
-				&& !txtEmail.getText().isEmpty() && !txtDireccion.getText().isEmpty()  && !txtTelefono.getText().isEmpty() && 
-				!txtFechaNac.getText().isEmpty() )
-		{
-			btnGuardar.setEnabled(true);
-		
-		}else {
-		btnGuardar.setEnabled(false);
-		}
-	}
-	public void keyPressed(KeyEvent e) {
-	}
-	public void keyReleased(KeyEvent e) {
-		if (e.getSource() == txtTelefono) {
-			keyReleasedTxtPass(e);
-		}
-		if (e.getSource() == txtEmail) {
-			keyReleasedTxtEmail(e);
-		}
-		if (e.getSource() == txtNombres) {
-			keyReleasedTxtNombres(e);
-		}
-		if (e.getSource() == txtFechaNac) {
-			keyReleasedTxtFechaNac(e);
-		}
-		if (e.getSource() == txtDireccion) {
-			keyReleasedTxtUsuario(e);
-		}
-		if (e.getSource() == txtApellidos) {
-			keyReleasedTxtApellidos(e);
-		}
-		if (e.getSource() == txtCedula) {
-			keyReleasedTxtCedula(e);
-		}
-	}
-	public void keyTyped(KeyEvent e) {
-	}
-	protected void keyReleasedTxtCedula(KeyEvent e) {
-		habilitarBotonGuardar();
-	}
-	protected void keyReleasedTxtApellidos(KeyEvent e) {
-		habilitarBotonGuardar();
-	}
-	protected void keyReleasedTxtUsuario(KeyEvent e) {
-		habilitarBotonGuardar();
-	}
-	protected void keyReleasedTxtFechaNac(KeyEvent e) {
-		habilitarBotonGuardar();
-	}
-	protected void keyReleasedTxtNombres(KeyEvent e) {
-		habilitarBotonGuardar();
-	}
-	protected void keyReleasedTxtEmail(KeyEvent e) {
-		habilitarBotonGuardar();
-	}
-	protected void keyReleasedTxtPass(KeyEvent e) {
-		habilitarBotonGuardar();
-	}
+	
+	
+
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == tblRegistros) {
-			mouseClickedTblRegistros(e);
+			try {
+				mouseClickedTblRegistros(e);
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	}
 	public void mouseEntered(MouseEvent e) {
@@ -378,28 +349,77 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
 	}
 	public void mouseReleased(MouseEvent e) {
 	}
-	protected void mouseClickedTblRegistros(MouseEvent e) {
-		btnNuevo.setEnabled(false);
-		btnEditar.setEnabled(true);
-		String cedula , nombres, apellidos, usuario, email, pass, fechaN;
+	protected void mouseClickedTblRegistros(MouseEvent e) throws ParseException {
+	
+        btnEditar.setEnabled(true);
+        btnEliminar.setEnabled(true);
+        String cedula , nombres, apellidos, direccion, email, telefono,genero, fechaN;
         int Fila = tblRegistros.getSelectedRow();
         cedula = tblRegistros.getValueAt(Fila, 0).toString();
         nombres = tblRegistros.getValueAt(Fila, 1).toString();
         apellidos = tblRegistros.getValueAt(Fila, 2).toString();
-        usuario = tblRegistros.getValueAt(Fila, 3).toString();
+        direccion = tblRegistros.getValueAt(Fila, 3).toString();
         email = tblRegistros.getValueAt(Fila, 4).toString();
-        pass = tblRegistros.getValueAt(Fila, 5).toString();
-        
+        telefono = tblRegistros.getValueAt(Fila, 5).toString();
+        genero = tblRegistros.getValueAt(Fila, 6).toString();
         fechaN = tblRegistros.getValueAt(Fila, 7).toString();
        txtCedula.setText(cedula);
        txtNombres.setText(nombres);
        txtApellidos.setText(apellidos);
-       txtDireccion.setText(usuario);
+       txtDireccion.setText(direccion);
        txtEmail.setText(email);
-       txtTelefono.setText(pass);
-       cmbGenero.getSelectedItem();
-        txtFechaNac.setText(fechaN);
+       txtTelefono.setText(telefono);
+       cmbGenero.getModel().setSelectedItem(genero);
+       txtFechaNac.setText(fechaN);
+	}
+	
+	public void limpiar()
+	{
+		txtCedula.setText(null);
+		txtNombres.setText(null);
+		txtApellidos.setText(null);
+		txtDireccion.setText(null);
+		txtEmail.setText(null);
+		txtTelefono.setText(null);
+		cmbGenero.setModel(new DefaultComboBoxModel(Genero.values()));
+		txtFechaNac.setText(null);
+	}
+	protected void actionPerformedBtnGuardarM(ActionEvent e) {
+		mod.setCedula(Integer.parseInt(txtCedula.getText()));
+		mod.setNombres(txtNombres.getText());
+		mod.setApellidos(txtApellidos.getText());
+		mod.setDireccion(txtDireccion.getText());
+		mod.setEmail(txtEmail.getText());
+		mod.setTelefono(Integer.parseInt(txtTelefono.getText()));
+		mod.setGenero(String.valueOf(cmbGenero.getModel().getSelectedItem()));
+		mod.setFechaNac(txtFechaNac.getText());
+		if(objcrud.modificar(mod))
+		{
+			JOptionPane.showMessageDialog(null, "Registro Modificado");
+			tabbedPane.setSelectedIndex(0);
+			btnGuardar.setEnabled(false);
+			btnNuevo.setEnabled(true);
+			limpiar();
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "Error al Modificar");
+			btnGuardar.setEnabled(true);
+			limpiar();
+		}
+	}
+	protected void actionPerformedBtnEliminar(ActionEvent e) {
+		mod.setCedula(Integer.parseInt(txtCedula.getText()));
+
+		if(objcrud.eliminar(mod))
+		{
+			JOptionPane.showMessageDialog(null, "Usuario:" + txtNombres.getText() + " Eliminado");
+
+			limpiar();
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "Error al Eliminar");
 		
-		
+			limpiar();
+		}
 	}
 }

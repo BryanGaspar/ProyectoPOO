@@ -5,11 +5,15 @@ import java.awt.EventQueue;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
+
+import Enums.Niveles;
+
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JTable;
 
@@ -102,6 +106,7 @@ public class MatriculacionEst extends JInternalFrame {
 		
 		cmbNivel = new JComboBox();
 		cmbNivel.setBounds(443, 30, 230, 22);
+		cmbNivel.setModel(new DefaultComboBoxModel(Niveles.values()));
 		panel.add(cmbNivel);
 		
 		cmbPeriodo = new JComboBox();

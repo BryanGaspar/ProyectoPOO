@@ -1,25 +1,27 @@
 package Conexiones;
 import java.sql.*;
-
-import javax.swing.JOptionPane;
 public class Conexion {
-	Connection conexion = null;
-	static final String URL = "jdbc:mysql://localhost:3306/matriculacion";
-	static final String USER = "root";
-	static final String PASS = "";
+	private final String base = "matriculacion";
+	private final String user = "root";
+	private final String pass = "";
+	private final String url = "jdbc:mysql://localhost:3306/" + base;
+	private Connection con = null;
 	
-	public Connection crearConexion(){
+	
+	public Connection getConexion() {
 		try {
-		Class.forName("com.mysql.jdbc.Driver");
-		 conexion = DriverManager.getConnection(URL, USER, PASS);
-		
-		} 
-		catch(Exception e) {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = (Connection)DriverManager.getConnection(this.url,this.user,this.pass);
+		} catch(SQLException e) {
+			System.err.println(e);
 			
-				JOptionPane.showMessageDialog(null, "error al conectar " + e,"Error",JOptionPane.ERROR_MESSAGE);
-				e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return conexion;
+		return con;
+		
+		
 		
 	}
 }

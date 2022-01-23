@@ -1,122 +1,135 @@
 package Conexiones;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-import ProyectoPooParte2.RegistroEstudiante;
 
-
-public class crudsql {
-	Conexion con = new Conexion();
-	public void eliminarEstudiante() {
-		String sql = "DELETE FROM estudiante WHERE Cedula=?";
-		DefaultTableModel modelo = new DefaultTableModel();
-        Connection cn = null;
-        
-        PreparedStatement pst = null;
-        RegistroEstudiante rE = new RegistroEstudiante();
-        ResultSet rs = null;
-        
-
-        try
-        {
-            cn = con.crearConexion();
-            
-            pst = cn.prepareStatement(sql);
-           
-            int Fila = rE.tblRegistros.getSelectedRow();
-            String codigo = rE.tblRegistros.getValueAt(Fila, 0).toString();
-            pst.setString(1, codigo);
-            rs = pst.executeQuery();
-            
-            modelo.removeRow(Fila);
-            
-           
-        }
-        catch(SQLException e)
-        {
-            
-            JOptionPane.showMessageDialog(null,"Error al conectar");
-            
-        }
-        finally
-        {
-            try
-            {
-                if (rs != null) rs.close();
-                
-                if (pst != null) pst.close();
-                
-                if (cn != null) cn.close();
-            }
-            catch(SQLException e)
-            {
-                JOptionPane.showMessageDialog(null,e);
-            }
-        }
-	}
-	
-	
-	public void ActualizarEstudiantes() {
-		String sql = "SELECT Cedula, Nombres, Apellidos, Direccion ,Email, Telefono ,Genero, FechaNac FROM estudiante WHERE Cedula=?";
-        
-        Connection cn = null;
-        
-        PreparedStatement pst = null;
-        RegistroEstudiante rE = new RegistroEstudiante();
-        ResultSet rs = null;
-        
-
-        //try
-        //{
-            cn = con.crearConexion();
-            
-            //pst = cn.prepareStatement(sql);
-            
-            //pst.setString(1, cedula);
-            //rs = pst.executeQuery();
-            
-           /* while(rs.next())
-            {
-                rE.txtCedula.setText(rs.getString("Cedula"));
-                rE.txtNombres.setText(rs.getString("Nombres"));
-                rE.txtApellidos.setText(rs.getString("Apellidos"));
-                rE.txtUsuario.setText(rs.getString("Usuario"));
-                rE.txtEmail.setText(rs.getString("Email"));
-                rE.txtPass.setText(rs.getString("Contrasenia"));
-                rE.cmbGenero.getSelectedItem();
-                rE.txtFechaNac.setText(rs.getString("FechaNac"));
-           }
-            
-           
-        }
-        catch(SQLException e)
-        {
-            
-            JOptionPane.showMessageDialog(null,"Error al conectar");
-            
-        }
-        finally
-        {
-            try
-            {
-                if (rs != null) rs.close();
-                
-                if (pst != null) pst.close();
-                
-                if (cn != null) cn.close();
-            }
-            catch(SQLException e)
-            {
-                JOptionPane.showMessageDialog(null,e);
-            }
-        }*/
-        
+public class crudsql extends Conexion {
+	public boolean registrar(Estudiante est) {
+		PreparedStatement ps = null;
+		Connection con = getConexion();
 		
+		String sql = "INSERT INTO estudiante (Cedula,Nombres,Apellidos,Direccion,Email,Telefono,Genero,FechaNac) VALUES(?,?,?,?,?,?,?,?)";
+		
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, est.getCedula());
+			ps.setString(2, est.getNombres());
+			ps.setString(3, est.getApellidos());
+			ps.setString(4, est.getDireccion());
+			ps.setString(5, est.getEmail());
+			ps.setInt(6, est.getTelefono());
+			ps.setString(7, est.getGenero());
+			ps.setString(8, est.getFechaNac());
+			ps.execute();
+			return true;
+		} catch (SQLException e) {
+			System.err.println(e);
+			return false;
+		} finally {
+			try {
+				con.close();
+				
+			}catch (SQLException e) {
+				System.err.println(e);
+			}
+		}	
+	}
+
+	public boolean modificar(Estudiante est) {
+		PreparedStatement ps = null;
+		Connection con = getConexion();
+		
+		String sql = "UPDATE estudiante SET Cedula=?,Nombres=?,Apellidos=?,Direccion=?,Email=?,Telefono=?,Genero=?,FechaNac=?"
+				+ "WHERE Cedula=?";
+		
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, est.getCedula());
+			ps.setString(2, est.getNombres());
+			ps.setString(3, est.getApellidos());
+			ps.setString(4, est.getDireccion());
+			ps.setString(5, est.getEmail());
+			ps.setInt(6, est.getTelefono());
+			ps.setString(7, est.getGenero());
+			ps.setString(8, est.getFechaNac());
+			ps.setInt(9, est.getCedula());
+			ps.execute();
+			return true;
+		} catch (SQLException e) {
+			System.err.println(e);
+			return false;
+		} finally {
+			try {
+				con.close();
+				
+			}catch (SQLException e) {
+				System.err.println(e);
+			}
+		}	
+	}
+ 
+	public boolean eliminar(Estudiante est) {
+		PreparedStatement ps = null;
+		Connection con = getConexion();
+		
+		String sql = "DELETE FROM estudiante WHERE Cedula=?";
+		
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, est.getCedula());
+			ps.execute();
+			return true;
+		} catch (SQLException e) {
+			System.err.println(e);
+			return false;
+		} finally {
+			try {
+				con.close();
+				
+			}catch (SQLException e) {
+				System.err.println(e);
+			}
+		}	
+	}
+
+	public boolean buscar(Estudiante est) {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Connection con = getConexion();
+		
+		String sql = "SELECT * FROM estudiante WHERE Cedula=?";
+		
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, est.getCedula());
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				est.setCedula(rs.getInt("Cedula"));
+				est.setNombres(rs.getString("Nombres"));
+				est.setApellidos(rs.getString("Apellidos"));
+				est.setDireccion(rs.getString("Direccion"));
+				est.setEmail(rs.getString("Email"));
+				est.setTelefono(rs.getInt("Telefono"));
+				est.setGenero(rs.getString("Genero"));
+				est.setFechaNac(rs.getString("FechaNac"));
+				return true;
+			}
+			
+			return false;
+		} catch (SQLException e) {
+			System.err.println(e);
+			return false;
+		} finally {
+			try {
+				con.close();
+				
+			}catch (SQLException e) {
+				System.err.println(e);
+			}
+		}	
 	}
 	public DefaultTableModel mostrarEstudiantes() {
 		String []  nombresColumnas = {"Cedula","Nombres","Apellidos","Direccion","Email","Telefono","Genero","Fecha Nac"};
@@ -126,16 +139,15 @@ public class crudsql {
         
         String sql = "SELECT * FROM estudiante";
         
-        Connection cn = null;
         
         PreparedStatement pst = null;
         
         ResultSet rs = null;
-
+        Connection cn = getConexion();
 
         try
         {
-            cn = con.crearConexion();
+          
             
             pst = cn.prepareStatement(sql);                        
             
@@ -192,14 +204,13 @@ public class crudsql {
 	public boolean login(administradores usr) {
 		String sql = "SELECT Usuario, Pass FROM administrador Where Usuario = ?";
 		PreparedStatement ps = null;
+		Connection con = getConexion();
 		ResultSet rs = null;
-		Connection cn = null;
 		try
         {
-            cn = con.crearConexion();
-            
-            ps = cn.prepareStatement(sql);                        
-            ps.setString(1, usr.getAdmin());
+			
+			ps = con.prepareStatement(sql);                        
+			ps.setString(1, usr.getAdmin());
             rs = ps.executeQuery();
             while(rs.next())
             {
@@ -229,7 +240,7 @@ public class crudsql {
                 
                 if (ps != null) ps.close();
                 
-                if (cn != null) cn.close();
+                if (con != null) con.close();
             }
             catch(SQLException e)
             {
@@ -239,18 +250,4 @@ public class crudsql {
 		
 	}
 	
-	public void insertarDatos(String Cedula,String Nombres,String Apellidos,String Direccion,String Email,String Telefono,String Genero,String FechaNac) {
-		try {
-			Connection conexion = con.crearConexion();
-			java.sql.Statement st = conexion.createStatement();
-			String sql ="INSERT INTO estudiante(Cedula,Nombres,Apellidos,Direccion,Email,Telefono,Genero,FechaNac) VALUES('"+Cedula+"','"+Nombres+"','"+Apellidos+
-					"','"+Direccion+"','"+Email+"','"+Telefono+"','"+Genero+"','"+FechaNac+"')" ;
-			st.execute(sql);
-			st.close();
-			conexion.close();
-			JOptionPane.showMessageDialog(null, "Registro Exitoso", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Error al crear el registro "+e,"Error",JOptionPane.ERROR_MESSAGE);
-		}
-	}
 }

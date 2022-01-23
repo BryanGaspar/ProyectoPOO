@@ -73,7 +73,7 @@ public class Login extends JFrame implements ActionListener {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		lblNewLabel = new JLabel("LOGIN-INICION DE SESION");
+		lblNewLabel = new JLabel("LOGIN-INICIO DE SESION");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
 		lblNewLabel.setBounds(146, 11, 265, 42);
 		contentPane.add(lblNewLabel);
