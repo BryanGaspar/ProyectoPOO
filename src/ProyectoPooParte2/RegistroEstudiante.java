@@ -3,13 +3,9 @@ package ProyectoPooParte2;
 import java.awt.EventQueue;
 
 import javax.swing.JInternalFrame;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
 import javax.swing.JTable;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.DefaultTableCellRenderer;
-
 import Conexiones.crudsqlEst;
 import Enums.Genero;
 
@@ -17,40 +13,25 @@ import Enums.Genero;
 
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
-import javax.swing.SwingConstants;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JToggleButton;
-import javax.swing.JList;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JToolBar;
-import javax.swing.JPopupMenu;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
-import java.awt.Color;
 import java.awt.SystemColor;
 import javax.swing.UIManager;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTabbedPane;
-import java.awt.event.KeyListener;
-import java.awt.event.KeyEvent;
-import javax.swing.table.DefaultTableModel;
-
 import Clases.Estudiante;
 
 import java.awt.event.MouseListener;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.text.ParseException;
 import java.awt.event.MouseEvent;
-import javax.swing.JFrame;
 
+@SuppressWarnings("serial")
 public class RegistroEstudiante extends JInternalFrame  implements ActionListener, MouseListener {
 	private JPanel panel;
 	private JButton btnNuevo;
@@ -69,17 +50,18 @@ public class RegistroEstudiante extends JInternalFrame  implements ActionListene
 	private JLabel lblTelefono;
 	private JLabel lblGenero;
 	private JLabel lblDireccion;
-	public JTextField txtDireccion;
-	public JTextField txtEmail;
-	public JTextField txtApellidos;
-	public JTextField txtNombres;
-	public JTextField txtCedula;
-	public JTextField txtTelefono;
-	public JComboBox cmbGenero;
-	public JTable tblRegistros;
+	private JTextField txtDireccion;
+	private JTextField txtEmail;
+	private JTextField txtApellidos;
+	private JTextField txtNombres;
+	private JTextField txtCedula;
+	private JTextField txtTelefono;
+	@SuppressWarnings("rawtypes")
+	private JComboBox cmbGenero;
+	private JTable tblRegistros;
 	private JTextField txtFechaNac;
-	crudsqlEst objcrud = new crudsqlEst();
-	Estudiante mod = new Estudiante();
+	private crudsqlEst objcrud = new crudsqlEst();
+	private Estudiante mod = new Estudiante();
 	private JButton btnGuardarM;
 	/**
 	 * Launch the application.
@@ -101,6 +83,7 @@ public class RegistroEstudiante extends JInternalFrame  implements ActionListene
 	/**
 	 * Create the frame.
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public RegistroEstudiante() {
 		setBackground(SystemColor.window);
 		
@@ -331,7 +314,46 @@ public class RegistroEstudiante extends JInternalFrame  implements ActionListene
 	
 	}
 	
-	
+	protected void actionPerformedBtnGuardarM(ActionEvent e) {
+		mod.setCedula(Integer.parseInt(txtCedula.getText()));
+		mod.setNombres(txtNombres.getText());
+		mod.setApellidos(txtApellidos.getText());
+		mod.setDireccion(txtDireccion.getText());
+		mod.setEmail(txtEmail.getText());
+		mod.setTelefono(Integer.parseInt(txtTelefono.getText()));
+		mod.setGenero(String.valueOf(cmbGenero.getModel().getSelectedItem()));
+		mod.setFechaNac(txtFechaNac.getText());
+		if(objcrud.modificarEst(mod))
+		{
+			JOptionPane.showMessageDialog(null, "Registro Modificado");
+			tblRegistros.setModel(objcrud.mostrarEstudiantes());
+			tabbedPane.setSelectedIndex(0);
+			btnGuardar.setEnabled(false);
+			btnNuevo.setEnabled(true);
+			limpiar();
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "Error al Modificar");
+			btnGuardar.setEnabled(true);
+			limpiar();
+		}
+	}
+	protected void actionPerformedBtnEliminar(ActionEvent e) {
+		mod.setCedula(Integer.parseInt(txtCedula.getText()));
+
+		if(objcrud.eliminarEst(mod))
+		{
+			JOptionPane.showMessageDialog(null, "Usuario:" + txtNombres.getText() + " Eliminado");
+			tblRegistros.setModel(objcrud.mostrarEstudiantes());
+
+			limpiar();
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "Error al Eliminar");
+		
+			limpiar();
+		}
+	}
 
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == tblRegistros) {
@@ -375,6 +397,7 @@ public class RegistroEstudiante extends JInternalFrame  implements ActionListene
        txtFechaNac.setText(fechaN);
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void limpiar()
 	{
 		txtCedula.setText(null);
@@ -386,44 +409,5 @@ public class RegistroEstudiante extends JInternalFrame  implements ActionListene
 		cmbGenero.setModel(new DefaultComboBoxModel(Genero.values()));
 		txtFechaNac.setText(null);
 	}
-	protected void actionPerformedBtnGuardarM(ActionEvent e) {
-		mod.setCedula(Integer.parseInt(txtCedula.getText()));
-		mod.setNombres(txtNombres.getText());
-		mod.setApellidos(txtApellidos.getText());
-		mod.setDireccion(txtDireccion.getText());
-		mod.setEmail(txtEmail.getText());
-		mod.setTelefono(Integer.parseInt(txtTelefono.getText()));
-		mod.setGenero(String.valueOf(cmbGenero.getModel().getSelectedItem()));
-		mod.setFechaNac(txtFechaNac.getText());
-		if(objcrud.modificarEst(mod))
-		{
-			JOptionPane.showMessageDialog(null, "Registro Modificado");
-			tblRegistros.setModel(objcrud.mostrarEstudiantes());
-			tabbedPane.setSelectedIndex(0);
-			btnGuardar.setEnabled(false);
-			btnNuevo.setEnabled(true);
-			limpiar();
-		}
-		else {
-			JOptionPane.showMessageDialog(null, "Error al Modificar");
-			btnGuardar.setEnabled(true);
-			limpiar();
-		}
-	}
-	protected void actionPerformedBtnEliminar(ActionEvent e) {
-		mod.setCedula(Integer.parseInt(txtCedula.getText()));
 
-		if(objcrud.eliminarEst(mod))
-		{
-			JOptionPane.showMessageDialog(null, "Usuario:" + txtNombres.getText() + " Eliminado");
-			tblRegistros.setModel(objcrud.mostrarEstudiantes());
-
-			limpiar();
-		}
-		else {
-			JOptionPane.showMessageDialog(null, "Error al Eliminar");
-		
-			limpiar();
-		}
-	}
 }

@@ -11,7 +11,7 @@ import javax.swing.table.DefaultTableModel;
 import Clases.Carrera;
 
 public class crudsqlCarr extends Conexion{
-	public boolean registrarNiv(Carrera carr) {
+	public boolean registrarCarr(Carrera carr) {
 		PreparedStatement ps = null;
 		Connection con = getConexion();
 		
@@ -37,7 +37,7 @@ public class crudsqlCarr extends Conexion{
 		}	
 	}
 	
-	public boolean modificarNiv(Carrera carr) {
+	public boolean modificarCarr(Carrera carr) {
 		PreparedStatement ps = null;
 		Connection con = getConexion();
 		
@@ -62,7 +62,7 @@ public class crudsqlCarr extends Conexion{
 			}
 		}	
 	}
-	public boolean eliminarNiv(Carrera carr) {
+	public boolean eliminarCarr(Carrera carr) {
 		PreparedStatement ps = null;
 		Connection con = getConexion();
 		
