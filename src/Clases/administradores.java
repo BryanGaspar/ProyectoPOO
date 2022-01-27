@@ -1,4 +1,4 @@
-package Conexiones;
+package Clases;
 
 public class administradores {
 		private String admin;

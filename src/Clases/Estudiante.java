@@ -1,4 +1,4 @@
-package Conexiones;
+package Clases;
 
 public class Estudiante {
 	private int cedula;

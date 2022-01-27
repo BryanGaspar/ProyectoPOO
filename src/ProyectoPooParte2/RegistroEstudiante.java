@@ -10,9 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 
-
-import Conexiones.Estudiante;
-import Conexiones.crudsql;
+import Conexiones.crudsqlEst;
 import Enums.Genero;
 
 
@@ -42,6 +40,9 @@ import javax.swing.JTabbedPane;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
 import javax.swing.table.DefaultTableModel;
+
+import Clases.Estudiante;
+
 import java.awt.event.MouseListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -50,7 +51,7 @@ import java.text.ParseException;
 import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
 
-public class RegistroEstudiante extends JInternalFrame implements ActionListener, MouseListener {
+public class RegistroEstudiante extends JInternalFrame  implements ActionListener, MouseListener {
 	private JPanel panel;
 	private JButton btnNuevo;
 	private JButton btnGuardar;
@@ -77,7 +78,7 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
 	public JComboBox cmbGenero;
 	public JTable tblRegistros;
 	private JTextField txtFechaNac;
-	crudsql objcrud = new crudsql();
+	crudsqlEst objcrud = new crudsqlEst();
 	Estudiante mod = new Estudiante();
 	private JButton btnGuardarM;
 	/**
@@ -111,7 +112,7 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
 		getContentPane().setLayout(null);
 		
 		panel = new JPanel();
-		panel.setBounds(494, 29, 130, 290);
+		panel.setBounds(494, 18, 130, 290);
 		getContentPane().add(panel);
 		panel.setBorder(new TitledBorder(null, "Opciones", TitledBorder.CENTER, TitledBorder.TOP, null, null));
 		panel.setLayout(null);
@@ -155,7 +156,7 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
 		panel.add(btnGuardarM);
 		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(0, 0, 638, 319);
+		tabbedPane.setBounds(0, 0, 488, 308);
 		getContentPane().add(tabbedPane);
 		
 		pnRegistroEst = new JPanel();
@@ -311,9 +312,10 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
 			mod.setTelefono(Integer.parseInt(txtTelefono.getText()));
 			mod.setGenero(String.valueOf(cmbGenero.getSelectedItem()));
 			mod.setFechaNac(txtFechaNac.getText());
-			if(objcrud.registrar(mod))
+			if(objcrud.registrarEst(mod))
 			{
 				JOptionPane.showMessageDialog(null, "Registro Guardado");
+				tblRegistros.setModel(objcrud.mostrarEstudiantes());
 				tabbedPane.setSelectedIndex(0);
 				tabbedPane.setEnabledAt(1, false);
 				btnGuardar.setEnabled(false);
@@ -393,9 +395,10 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
 		mod.setTelefono(Integer.parseInt(txtTelefono.getText()));
 		mod.setGenero(String.valueOf(cmbGenero.getModel().getSelectedItem()));
 		mod.setFechaNac(txtFechaNac.getText());
-		if(objcrud.modificar(mod))
+		if(objcrud.modificarEst(mod))
 		{
 			JOptionPane.showMessageDialog(null, "Registro Modificado");
+			tblRegistros.setModel(objcrud.mostrarEstudiantes());
 			tabbedPane.setSelectedIndex(0);
 			btnGuardar.setEnabled(false);
 			btnNuevo.setEnabled(true);
@@ -410,9 +413,10 @@ public class RegistroEstudiante extends JInternalFrame implements ActionListener
 	protected void actionPerformedBtnEliminar(ActionEvent e) {
 		mod.setCedula(Integer.parseInt(txtCedula.getText()));
 
-		if(objcrud.eliminar(mod))
+		if(objcrud.eliminarEst(mod))
 		{
 			JOptionPane.showMessageDialog(null, "Usuario:" + txtNombres.getText() + " Eliminado");
+			tblRegistros.setModel(objcrud.mostrarEstudiantes());
 
 			limpiar();
 		}

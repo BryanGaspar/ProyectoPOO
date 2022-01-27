@@ -7,8 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import Conexiones.administradores;
-import Conexiones.crudsql;
+import Clases.administradores;
+import Conexiones.crudsqlEst;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -38,7 +38,7 @@ public class Login extends JFrame implements ActionListener {
 	private JButton btnIngresar;
 	private JPasswordField pass;
 	private JProgressBar progressBar;
-	crudsql objcrud = new crudsql();
+	crudsqlEst objcrud = new crudsqlEst();
 	
 	/**
 	 * Launch the application.

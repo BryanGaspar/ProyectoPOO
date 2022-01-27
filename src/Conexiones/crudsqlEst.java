@@ -4,9 +4,13 @@ import java.sql.*;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+import Clases.Estudiante;
+import Clases.Carrera;
+import Clases.administradores;
 
-public class crudsql extends Conexion {
-	public boolean registrar(Estudiante est) {
+
+public class crudsqlEst extends Conexion {
+	public boolean registrarEst(Estudiante est) {
 		PreparedStatement ps = null;
 		Connection con = getConexion();
 		
@@ -36,8 +40,9 @@ public class crudsql extends Conexion {
 			}
 		}	
 	}
-
-	public boolean modificar(Estudiante est) {
+	
+	
+	public boolean modificarEst(Estudiante est) {
 		PreparedStatement ps = null;
 		Connection con = getConexion();
 		
@@ -70,7 +75,7 @@ public class crudsql extends Conexion {
 		}	
 	}
  
-	public boolean eliminar(Estudiante est) {
+	public boolean eliminarEst(Estudiante est) {
 		PreparedStatement ps = null;
 		Connection con = getConexion();
 		
@@ -94,7 +99,7 @@ public class crudsql extends Conexion {
 		}	
 	}
 
-	public boolean buscar(Estudiante est) {
+	public boolean buscarEst(Estudiante est) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		Connection con = getConexion();
@@ -201,6 +206,7 @@ public class crudsql extends Conexion {
         }
          return modelo;
 	}
+	
 	public boolean login(administradores usr) {
 		String sql = "SELECT Usuario, Pass FROM administrador Where Usuario = ?";
 		PreparedStatement ps = null;
