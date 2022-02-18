@@ -1,33 +1,41 @@
 package Conexiones;
-import java.sql.*;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.PseudoColumnUsage;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.swing.Box;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import com.mysql.cj.jdbc.result.ResultSetMetaData;
 
-import Clases.Estudiante;
-
-import Clases.administradores;
+import Clases.Asignatura;
 
 
-public class crudsqlEst extends Conexion {
-	public boolean registrarEst(Estudiante est) {
+
+
+
+
+
+public class crudsqlAsig extends Conexion {
+	
+	public boolean registrarEst(Asignatura asg) {
 		PreparedStatement ps = null;
 		Connection con = getConexion();
 		
-		String sql = "INSERT INTO estudiante (Cedula,Nombres,Apellidos,Direccion,Email,Telefono,Genero,FechaNac) VALUES(?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO asignatura (NombreA,NombreC,NombreN) VALUES(?,?,?)";
 		
 		try {
 			ps = con.prepareStatement(sql);
-			ps.setInt(1, est.getCedula());
-			ps.setString(2, est.getNombres());
-			ps.setString(3, est.getApellidos());
-			ps.setString(4, est.getDireccion());
-			ps.setString(5, est.getEmail());
-			ps.setInt(6, est.getTelefono());
-			ps.setString(7, est.getGenero());
-			ps.setString(8, est.getFechaNac());
+			ps.setString(1, asg.getNombreA());
+			ps.setString(2, asg.getNombreCarrera());
+			ps.setString(3, asg.getNombreNString());
+
 			ps.execute();
 			return true;
 		} catch (SQLException e) {
@@ -43,25 +51,19 @@ public class crudsqlEst extends Conexion {
 		}	
 	}
 	
-	
-	public boolean modificarEst(Estudiante est) {
+
+	public boolean modificarAsg(Asignatura asg) {
 		PreparedStatement ps = null;
 		Connection con = getConexion();
-		
-		String sql = "UPDATE estudiante SET Cedula=?,Nombres=?,Apellidos=?,Direccion=?,Email=?,Telefono=?,Genero=?,FechaNac=?"
+
+		String sql = "UPDATE asignatura SET NombreA=?,NombreC=?,NombreN=?"
 				+ "WHERE Id=?";
-		
 		try {
 			ps = con.prepareStatement(sql);
-			ps.setInt(1, est.getCedula());
-			ps.setString(2, est.getNombres());
-			ps.setString(3, est.getApellidos());
-			ps.setString(4, est.getDireccion());
-			ps.setString(5, est.getEmail());
-			ps.setInt(6, est.getTelefono());
-			ps.setString(7, est.getGenero());
-			ps.setString(8, est.getFechaNac());
-			ps.setInt(9, est.getId());
+			ps.setString(1, asg.getNombreA());
+			ps.setString(2, asg.getNombreCarrera());
+			ps.setString(3, asg.getNombreNString());
+			ps.setInt(4, asg.getId());
 			ps.execute();
 			return true;
 		} catch (SQLException e) {
@@ -77,16 +79,19 @@ public class crudsqlEst extends Conexion {
 		}	
 	}
  
-	public boolean eliminarEst(Estudiante est) {
+	public boolean eliminarAsg(Asignatura asg) {
 		PreparedStatement ps = null;
 		Connection con = getConexion();
 		
-		String sql = "DELETE FROM estudiante WHERE Id=?";
+		String sql = "DELETE FROM asignatura WHERE Id=?";
 		
 		try {
+			
 			ps = con.prepareStatement(sql);
-			ps.setInt(1, est.getId());
+			ps.setInt(1, asg.getId());
 			ps.execute();
+
+			
 			return true;
 		} catch (SQLException e) {
 			System.err.println(e);
@@ -100,8 +105,7 @@ public class crudsqlEst extends Conexion {
 			}
 		}	
 	}
-
-	public DefaultTableModel buscarEst(Estudiante est, int aux) {
+	public DefaultTableModel buscarAsg(Asignatura Asignatura , int aux) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		Connection con = getConexion();
@@ -122,20 +126,17 @@ public class crudsqlEst extends Conexion {
     				}
     				
     			}};
+    		  
     			model.addColumn("Nº");
-    			model.addColumn("cedula");
-    			model.addColumn("nombre");
-    			model.addColumn("apellido");
-    			model.addColumn("direccion");
-    			model.addColumn("correo");
-    			model.addColumn("telefono");
-    			model.addColumn("genero");
-    			model.addColumn("Fecha_de_nacimiento");
+    			model.addColumn("NombreA");
+    			model.addColumn("NombreC");
+    			model.addColumn("NombreN");
+    		
     	
     			if (aux==0)
 				{
-    				ps=con.prepareStatement("SELECT * FROM estudiante WHERE Cedula=?");
-					ps.setInt(1, est.getCedula());	
+    				ps=con.prepareStatement("SELECT * FROM asignatura WHERE NombreA=?");
+					ps.setString(1, Asignatura.getNombreA());	
 					}
 				
 			
@@ -168,12 +169,12 @@ public class crudsqlEst extends Conexion {
 		}
 		return model;	
 	}
-	public DefaultTableModel mostrarEstudiantes() {
-		
+	public DefaultTableModel mostrarAsig() {
+
         
-        DefaultTableModel model = null;
+		 DefaultTableModel modelo = null;
         
-        String sql = "SELECT * FROM estudiante";
+        String sql = "SELECT * FROM asignatura";
         
         
         PreparedStatement pst = null;
@@ -183,10 +184,11 @@ public class crudsqlEst extends Conexion {
 
         try
         {
-        	model = new DefaultTableModel(){
+          
+        	modelo = new DefaultTableModel(){
     			//bloquear columnas
     			public boolean isCellEditable(int filas, int col) {
-    				if((col == 0) || (col == 1) || (col == 2) || (col == 3) || (col == 4) || (col == 5) || (col == 6) || (col == 7) || (col == 8)) {
+    				if((col == 0) || (col == 1) || (col == 2) || (col == 3) || (col == 4) ) {
     					return false;
     				}
     				else {
@@ -194,43 +196,39 @@ public class crudsqlEst extends Conexion {
     				}
     				
     			}};
-    			model.addColumn("Nº");
-    			model.addColumn("cedula");
-    			model.addColumn("nombre");
-    			model.addColumn("apellido");
-    			model.addColumn("direccion");
-    			model.addColumn("correo");
-    			model.addColumn("telefono");
-    			model.addColumn("genero");
-    			model.addColumn("Fecha_de_nacimiento");
-    	
-    			
+    			modelo.addColumn("Nº");
+    			modelo.addColumn("NombreA");
+    			modelo.addColumn("NombreC");
+    			modelo.addColumn("NombreN");
+    		
             pst = cn.prepareStatement(sql);                        
             
             rs = pst.executeQuery();
-           
-
             ResultSetMetaData rstabla = (ResultSetMetaData) rs.getMetaData();
 			int numCampos = rstabla.getColumnCount();
             while(rs.next())
             {
-     
+
             	Object [] filas = new Object[numCampos];
 				for (int iterator = 0; iterator<numCampos; iterator++) {
 					filas[iterator] = rs.getObject(iterator+1);	
 				}
-				model.addRow(filas);
-				
-			}
+				modelo.addRow(filas);
+          
                 
-            
+              
+                
+                
+                
+                
+            }
             
            
         }
         catch(SQLException e)
         {
             
-            JOptionPane.showMessageDialog(null,"Error al conectar");
+            JOptionPane.showMessageDialog(null,"Error al conectar" + e);
             
         }
         finally
@@ -248,56 +246,25 @@ public class crudsqlEst extends Conexion {
                 JOptionPane.showMessageDialog(null,e);
             }
         }
-         return model;
+         return modelo;
 	}
-	
-	public boolean login(administradores usr) {
-		String sql = "SELECT Usuario, Pass FROM administrador Where Usuario = ?";
+
+	public void cmbCarrera() {
 		PreparedStatement ps = null;
 		Connection con = getConexion();
 		ResultSet rs = null;
-		try
-        {
-			
-			ps = con.prepareStatement(sql);                        
-			ps.setString(1, usr.getAdmin());
-            rs = ps.executeQuery();
-            while(rs.next())
-            {
-            	if(usr.getPass().equals(rs.getString(2))) {
-            		usr.setAdmin(rs.getString(1));
-            		usr.setPass(rs.getString(2));
-            		return true;
-            	}
-            	else{
-            	return false;
-            	}
-            }
-            return false;
-        }
-        catch(SQLException e)
-        {
-            
-            JOptionPane.showMessageDialog(null,"Error al conectar");
-            return false;
-            
-        }
-        finally
-        {
-            try
-            {
-                if (rs != null) rs.close();
-                
-                if (ps != null) ps.close();
-                
-                if (con != null) con.close();
-            }
-            catch(SQLException e)
-            {
-                JOptionPane.showMessageDialog(null,e);
-            }
-        }   
-		
+		String sql = "SELECT * FROM asignatura";
+		JComboBox model = null;
+		try {
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				model.addItem(rs.getString("NombreC"));
+				
+			}
+			rs.close();
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
-	
 }

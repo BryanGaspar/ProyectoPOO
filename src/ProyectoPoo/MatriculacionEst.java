@@ -1,4 +1,4 @@
-package ProyectoPooParte3;
+package ProyectoPoo;
 
 import java.awt.EventQueue;
 
@@ -6,16 +6,27 @@ import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
+import Enums.Carreras;
+import Enums.Genero;
 import Enums.Niveles;
 
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JTable;
+import javax.swing.ImageIcon;
+import com.toedter.calendar.JDateChooser;
+
+import Conexiones.Conexion;
+import Conexiones.crudsqlAsig;
 
 public class MatriculacionEst extends JInternalFrame {
 	private JPanel panel;
@@ -27,14 +38,13 @@ public class MatriculacionEst extends JInternalFrame {
 	private JComboBox cmbCarrera;
 	private JComboBox cmbMaterias;
 	private JLabel lblNewLabel_3;
-	private JLabel lblNewLabel_4;
 	private JComboBox cmbNivel;
-	private JComboBox cmbPeriodo;
 	private JButton btnNueva;
 	private JButton btnGuardarInscripcion;
 	private JButton btnCancelar;
 	private JTable table;
-
+	private JButton btnBuscar;
+	Conexion con = new Conexion();
 	/**
 	 * Launch the application.
 	 */
@@ -81,13 +91,13 @@ public class MatriculacionEst extends JInternalFrame {
 		panel.add(lblNewLabel_2);
 		
 		txtEst = new JTextField();
-		txtEst.setEditable(false);
-		txtEst.setBounds(95, 31, 248, 20);
+		txtEst.setBounds(95, 31, 207, 20);
 		panel.add(txtEst);
 		txtEst.setColumns(10);
 		
 		cmbCarrera = new JComboBox();
 		cmbCarrera.setBounds(98, 77, 245, 22);
+		cmbCarrera.setModel(new DefaultComboBoxModel(Carreras.values()));
 		panel.add(cmbCarrera);
 		
 		cmbMaterias = new JComboBox();
@@ -99,23 +109,20 @@ public class MatriculacionEst extends JInternalFrame {
 		lblNewLabel_3.setBounds(387, 33, 46, 15);
 		panel.add(lblNewLabel_3);
 		
-		lblNewLabel_4 = new JLabel("Periodo:");
-		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_4.setBounds(387, 81, 46, 14);
-		panel.add(lblNewLabel_4);
-		
 		cmbNivel = new JComboBox();
 		cmbNivel.setBounds(443, 30, 230, 22);
 		cmbNivel.setModel(new DefaultComboBoxModel(Niveles.values()));
 		panel.add(cmbNivel);
 		
-		cmbPeriodo = new JComboBox();
-		cmbPeriodo.setBounds(443, 77, 230, 22);
-		panel.add(cmbPeriodo);
-		
 		table = new JTable();
 		table.setBounds(10, 174, 667, 189);
 		panel.add(table);
+		
+		btnBuscar = new JButton("");
+		btnBuscar.setFont(new Font("Tahoma", Font.PLAIN, 6));
+		btnBuscar.setIcon(new ImageIcon(MatriculacionEst.class.getResource("/ProyectoPoo/ImagenesProyecto/search-2-16.png")));
+		btnBuscar.setBounds(306, 33, 39, 20);
+		panel.add(btnBuscar);
 		
 		panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(null, "Opciones", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -134,6 +141,25 @@ public class MatriculacionEst extends JInternalFrame {
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBounds(10, 252, 141, 65);
 		panel_1.add(btnCancelar);
-
+		
+			PreparedStatement ps = null;
+			Connection cone = con.getConexion();
+			ResultSet rs = null;
+			String sql = "SELECT * FROM asignatura WHERE NombreC = '"+ String.valueOf(cmbCarrera.getSelectedItem()) + "'";
+			
+			try {
+				ps = cone.prepareStatement(sql);
+				rs = ps.executeQuery();
+					cmbNivel.addItem("Seleccione una opcion");
+				while (rs.next()) {
+					cmbNivel.addItem(rs.getString("NombreN"));
+					
+				}
+				
+				rs.close();
+			}catch (Exception e) {
+				// TODO: handle exception
+			}
+		
 	}
 }

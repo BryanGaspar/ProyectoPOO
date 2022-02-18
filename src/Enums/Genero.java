@@ -1,7 +1,7 @@
 package Enums;
 
 public enum Genero {
-	MALE("Masculino"), FEMALE("Femenino"), OTHER("Otro");
+	Default("Seleccion una opción"),MALE("Masculino"), FEMALE("Femenino"), OTHER("Otro");
 	private String imp_genero;
 	
 	Genero(String s) {

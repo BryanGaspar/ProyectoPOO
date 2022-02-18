@@ -27,29 +27,19 @@ import java.awt.event.InputEvent;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
 
-import ProyectoPooParte2.Asignaturas;
-import ProyectoPooParte2.RegistroCarreras;
-import ProyectoPooParte2.RegistroEstudiante;
-import ProyectoPooParte3.CertificadoMatricula;
-import ProyectoPooParte3.MatriculacionEst;
-import ProyectoPooParte3.ReporteEstudiantes;
 
 public class Menu extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
 	private JMenuItem mnEstudiantes;
-	private JMenuItem mnCarreras;
 	private JMenuItem mnAsignaturas;
 	private JMenuItem mnMatriculacion;
-	private JMenuItem mnEstMat;
-	private JMenuItem mnCertMat;
 	private JDesktopPane Desktop;
 	RegistroEstudiante est = new RegistroEstudiante();
-	RegistroCarreras carr = new RegistroCarreras();
+	
 	Asignaturas asg = new Asignaturas();
 	MatriculacionEst matEst = new MatriculacionEst();
-	ReporteEstudiantes repEst = new ReporteEstudiantes();
-	CertificadoMatricula certMat = new CertificadoMatricula();
+
 
 	/**
 	 * Launch the application.
@@ -81,7 +71,7 @@ public class Menu extends JFrame implements ActionListener {
 		menuBar.setBackground(UIManager.getColor("Button.highlight"));
 		setJMenuBar(menuBar);
 		
-		JMenu mnArchivo = new JMenu("Archivo");
+		JMenu mnArchivo = new JMenu("Registros");
 		mnArchivo.setMnemonic('A');
 		mnArchivo.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		menuBar.add(mnArchivo);
@@ -90,11 +80,6 @@ public class Menu extends JFrame implements ActionListener {
 		mnEstudiantes.addActionListener(this);
 		mnEstudiantes.setIcon(new ImageIcon(Menu.class.getResource("/ProyectoPoo/ImagenesProyecto/student-16.png")));
 		mnArchivo.add(mnEstudiantes);
-		
-		mnCarreras = new JMenuItem("Carreras");
-		mnCarreras.addActionListener(this);
-		mnCarreras.setIcon(new ImageIcon(Menu.class.getResource("/ProyectoPoo/ImagenesProyecto/engineering-16.png")));
-		mnArchivo.add(mnCarreras);
 		
 		mnAsignaturas = new JMenuItem("Asignaturas");
 		mnAsignaturas.addActionListener(this);
@@ -110,30 +95,13 @@ public class Menu extends JFrame implements ActionListener {
 		mnMatriculacion.addActionListener(this);
 		mnMatriculacion.setIcon(new ImageIcon(Menu.class.getResource("/ProyectoPoo/ImagenesProyecto/pages-4-16.png")));
 		mnProceso.add(mnMatriculacion);
-		
-		JMenu mnReportes = new JMenu("Reportes");
-		mnReportes.setIcon(null);
-		mnReportes.setMnemonic('R');
-		mnReportes.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		menuBar.add(mnReportes);
-		
-		mnEstMat = new JMenuItem("Estudiantes Matriculados");
-		mnEstMat.addActionListener(this);
-		mnEstMat.setIcon(new ImageIcon(Menu.class.getResource("/ProyectoPoo/ImagenesProyecto/inbox-5-16.png")));
-		mnEstMat.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		mnReportes.add(mnEstMat);
-		
-		mnCertMat = new JMenuItem("Certificado de Matricula");
-		mnCertMat.addActionListener(this);
-		mnCertMat.setIcon(new ImageIcon(Menu.class.getResource("/ProyectoPoo/ImagenesProyecto/pdf-file-16.png")));
-		mnCertMat.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		mnReportes.add(mnCertMat);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new CardLayout(0, 0));
 		
 		Desktop = new JDesktopPane();
+		Desktop.setBackground(Color.DARK_GRAY);
 		contentPane.add(Desktop, "name_95837756417400");
 	}
 	
@@ -143,35 +111,13 @@ public class Menu extends JFrame implements ActionListener {
 		if (e.getSource() == mnEstudiantes) {
 			actionPerformedMnEstudiantes(e);
 		}
-		if (e.getSource() == mnCarreras) {
-			actionPerformedMnCarreras(e);
-		}
 		if (e.getSource() == mnAsignaturas) {
 			actionPerformedMnAsignaturas(e);
 		}
 		if (e.getSource() == mnMatriculacion) {
 			actionPerformedMnMatriculacion(e);
 		}
-		if (e.getSource() == mnEstMat) {
-			actionPerformedmnEstMat(e);
-		}
-		if (e.getSource() == mnCertMat) {
-			actionPerformedmnCertMat(e);
-		}
 	}
-protected void actionPerformedmnCertMat(ActionEvent e) {
-		
-		this.Desktop.add(certMat);
-		certMat.setVisible(true);
-
-	}
-protected void actionPerformedmnEstMat(ActionEvent e) {
-	
-	this.Desktop.add(repEst);
-	repEst.setVisible(true);
-
-	
-}
 
 protected void actionPerformedMnMatriculacion(ActionEvent e) {
 		
@@ -185,10 +131,6 @@ protected void actionPerformedMnMatriculacion(ActionEvent e) {
 		est.setVisible(true);
 
 	
-	}
-	protected void actionPerformedMnCarreras(ActionEvent e) {
-		this.Desktop.add(carr);
-		carr.setVisible(true);
 	}
 	protected void actionPerformedMnAsignaturas(ActionEvent e) {
 		

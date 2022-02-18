@@ -1,7 +1,10 @@
 package Clases;
 
-public class Estudiante {
+import Conexiones.Conexion;
+
+public class Estudiante extends Conexion{
 	private int cedula;
+	private int id;
 	private String nombres;
 	private String apellidos;
 	private String direccion;
@@ -9,6 +12,13 @@ public class Estudiante {
 	private int telefono;
 	private String genero;
 	private String fechaNac;
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public int getCedula() {
 		return cedula;
 	}
@@ -57,5 +67,6 @@ public class Estudiante {
 	public void setFechaNac(String fechaNac) {
 		this.fechaNac = fechaNac;
 	}
-
+	
+	
 }
