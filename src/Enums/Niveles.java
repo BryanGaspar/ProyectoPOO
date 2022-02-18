@@ -4,10 +4,6 @@ package Enums;
  * Se crea el enum Niveles
  */
 public enum Niveles {
-<<<<<<< HEAD
-	Default("Seleccion una opción"),Primero("1er. Nivel"), Segundo("2do. Nivel"), Tercero("3er. Nivel"), Cuarto("4to. Nivel"), Quinto("5to. Nivel"),
-	Sexto("6to. Nivel"), Septimo("7to. Nivel"), Octavo("8to. Nivel");
-=======
 	/**
 	 * Se delcara el enum Primero
 	 */
@@ -43,7 +39,6 @@ public enum Niveles {
 	/**
 	 * Se decalata variable String
 	 */
->>>>>>> 0d73a44bf12f466324042377d692bee3c3a55a67
 	private String imp_nivel;
 	/**
 	 * 

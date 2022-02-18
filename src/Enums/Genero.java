@@ -4,9 +4,6 @@ package Enums;
  * Se crea el enum Genero
  */
 public enum Genero {
-<<<<<<< HEAD
-	Default("Seleccion una opción"),MALE("Masculino"), FEMALE("Femenino"), OTHER("Otro");
-=======
 	/**
 	 * Decalarar enum MALE
 	 */
@@ -22,7 +19,6 @@ public enum Genero {
 	/**
 	 * Se decalata variable String
 	 */
->>>>>>> 0d73a44bf12f466324042377d692bee3c3a55a67
 	private String imp_genero;
 	/**
 	 * 
